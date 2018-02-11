@@ -1,4 +1,4 @@
-var rules = [
+var roles = [
     {
         profile: 'ADMIN',
         routes: [
@@ -21,4 +21,4 @@ var rules = [
     }
 ]
 
-module.exports = rules;
+module.exports = roles;

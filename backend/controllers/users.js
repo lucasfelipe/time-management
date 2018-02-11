@@ -2,7 +2,7 @@ var User = require('../models/users');
 
 index = async (req, res) => {
     let users = await User.find({});
-    res.status(200).json({ success: {users} });
+    res.status(200).json({ success: { users } });
 }
 
 save = async (req, res) => {
@@ -19,7 +19,9 @@ getById = async (req, res) => {
 }
 
 update = async (req, res) => {
-    let user = await User.findOneAndUpdate({_id: req.params.id}, req.body.user);
+    let { id } = req.params;
+    let { user } = req.body;
+    user = await User.findOneAndUpdate({_id: id}, user);
     res.status(200).json({ success: { user } });
 }
 

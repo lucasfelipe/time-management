@@ -1,62 +1,76 @@
-var Task = require('../models/tasks');
+var User = require('../models/users');
+var jwt = require('jsonwebtoken');
+var roles = require('../roles');
 
-index = (req, res) => {
- 
-    Task.find({}, function(err, tasks){
-        if(err) 
-            res.status(500).send({ error: { message: "Could not retrieve tasks" } });
-            
-        res.json({ success: { tasks } });
+
+const MY_SECRET_KEY = 'MY_SECRET_KEY';
+
+login = (req, res) => {
+     User.findOne({
+    username: req.body.username
+  }, function(err, user) {
+    
+    if (err) throw err;
+
+    if (!user) {
+      res.json({ success: false, message: 'Authentication failed. User not found.' });
+    } else if (user) {
+
+      if (user.password != req.body.password) {
+        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+      } else {
+
+    const payload = {
+      profile: user.profile,
+      _id: user._id
+    };
+    
+    var token = jwt.sign(payload, MY_SECRET_KEY, {
+      expiresIn: '1h'
     });
-
-}
-
-save = (req, res) => {
-    let task = req.body.task;
-    task =  new Task(Object.assign({}, task, {createdAt: new Date()}));
-    task.save().then(() => console.log('ok'), err => console.log(err));
-    res.json({ success: { task } });
-}
-
-getById = (req, res) => {
-  Task.findById(req.params.id, function(err, task) {
-    if(err) {
-       res.status(500).send({ error: { message: "Could not retrieve task with id " + req.params.id } });
-    } else {
-      res.send( {success: { task } } );
+        res.json({
+          success: true,
+          message: 'Token Sucess!',
+          token: token,
+          user: {
+            _id: user._id,
+            username: user.username,
+            profile: user.profile,
+            visibleRoutes: roles
+                  .find(e => e.profile === user.profile)
+                  .routes
+          }
+        });
+      }   
     }
   });
-}
-
-update = (req, res) => {
-    Task.findOneAndUpdate({_id: req.params.id}, req.body.task, function(err, data) {
-        if(err) {
-            res.status(500).send({error: { message: "Could not update task with id " + req.params.id } });
-        } else {
-            res.send( {success: { user: data } } );
-        }
-    });
 
 }
 
-remove = (req, res) => {
-   Task.remove({_id: req.params.id}, function(err, data) {
-        if(err) {
-            res.status(500).send({message: "Could not delete task with id " + req.params.id});
-        } else {
-            res.send({success: {
-                message: "Task deleted successfully!"
-              }
-            })
-        }
+checkAuth = (req, res, next) => {
+  if (req.url === '/login' || req.url === '/users') {
+    next();
+    return;
+  }
+
+  var token = req.body.token || req.query.token || req.headers['authorization']; //Bearer token
+  // decode token
+  if (token) {
+      jwt.verify(token, MY_SECRET_KEY, function(err, decoded) {      
+      if (err) {
+        return res.json({ success: false, message: 'Failed to authenticate token.' });    
+      } else {
+        return res.json({ success: true, message: 'Token validated.' });
+      }
     });
+  } else {
+    return res.json({success: false, message: 'No token provided.'});
+  }
+
 }
 
 
 module.exports = {
-    index,
-    save,
-    getById,
-    update,
-    remove
+    login,
+    checkAuth
 }
