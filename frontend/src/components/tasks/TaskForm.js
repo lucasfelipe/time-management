@@ -4,12 +4,16 @@ import Yup from "yup";
 import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import CustomTextField from "../../commons/CustomTextField";
+import DatePicker from 'material-ui/DatePicker';
+import CustomDatePicker from "../../commons/CustomDatePicker";
 
 let TaskForm = props => {
   const { 
     values, 
     handleReset, 
     handleSubmit,
+    handleChange,
+    handleBlur,
     handleHide } = props;
 
   const actions = [
@@ -43,6 +47,11 @@ let TaskForm = props => {
         floatingLabelText="Time Spent"
         name="time"
       />
+      <CustomDatePicker
+        hintText="date"
+        name="day"
+        autoOk={true}
+        />
       {actions}
     </Form>
   );
@@ -56,19 +65,21 @@ TaskForm = withFormik({
       return {
         _id: props.task._id,
         taskname: props.task.taskname,
-        time: props.task.time
+        time: props.task.time,
+        day: props.task.day
       }
     } else {
        return {
         _id: undefined,
         taskname: "",
-        time: ""
+        time: "",
+        day: new Date()
       }
     }
   },
   validationSchema: Yup.object().shape({
     taskname: Yup.string().required(),
-    time: Yup.string().required().min(1).max(24)
+    time: Yup.number().required().min(1).max(24)
   }),
   handleHide: (value, { props }) => {
     props.handleHide();

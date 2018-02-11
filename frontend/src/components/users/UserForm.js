@@ -19,7 +19,8 @@ let UserForm = props => {
     handleBlur,
     handleSubmit,
     handleReset,
-    handleHide
+    handleHide,
+    signUp
   } = props;
 
   const actions = [
@@ -53,11 +54,14 @@ let UserForm = props => {
         name="password"
         type="password"
       />
-      <CustomSelectField
-        floatingLabelText="Role"
-        options={options}
-        name="profile"
-      />
+      {(!signUp || props.user.profile != 'USER') && 
+        <CustomSelectField
+          floatingLabelText="Role"
+          options={options}
+          name="profile"
+        />
+      }
+      
       <CustomTextField
         hintText="Prefered Hours Per Day"
         fullWidth={true}

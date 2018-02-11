@@ -27,7 +27,8 @@ const Task = props => {
           actAsExpander={false}
           showExpandableButton={false}
         />
-        <CardText>{Moment(task.timeSpent).format("MM dddd, hA")}</CardText>
+        {/* <CardText>{Moment(task.timeSpent).format("MM dddd, hA")}</CardText> */}
+        <CardText>{task.time}</CardText>
         <CardTitle
           title="Card title"
           subtitle="Card subtitle"

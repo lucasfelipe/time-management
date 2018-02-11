@@ -37,13 +37,12 @@ class UserPage extends Component {
 }
 
 const mapStateToProps = ({ user }) => ({
-  isAuthenticated: true,
   user
 });
 
 const mapDispatchToProps = dispatch => ({
   handleSaveUser: user => {
-    dispatch(saveUser(user));
+    dispatch(saveUser(user, true));
   },
   fetchAllUsers: () => {
     dispatch(fetchAllUsers());

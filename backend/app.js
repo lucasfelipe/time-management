@@ -103,8 +103,9 @@ app.post('/login', function(req, res) {
 
 app.get('/', function(req, res, next) {
   // check header or url parameters or post parameters for token
-  if (req.url === '/login') {
+  if (req.url === '/login' || req.url === '/users') {
     next();
+    return;
   }
 
   var token = req.body.token || req.query.token || req.headers['authorization']; //Bearer token
@@ -124,12 +125,13 @@ app.get('/', function(req, res, next) {
 
 app.use(function(req, res, next) {
   // check header or url parameters or post parameters for token
-  if (req.url === '/login') {
+  if (req.url === '/login' || req.url === '/users') {
     next();
+    return;
   }
 
   
-  var token = req.body.token || req.query.token || req.headers['authorization']; //Bearer token
+  var token = req.body.token || req.query.token || req.headers['authorization']; 
   // decode token
   if (token) {
     jwt.verify(token, app.get('secretKey'), function(err, decoded) {      
@@ -152,7 +154,11 @@ app.use(function(req, res, next) {
   
   let { decoded, url } = req;
 
-  console.log(url);
+  if(decoded === undefined) {
+    next();
+    return;
+  }
+    
   
   let isAllowed = rules
                   .find(e => e.profile === decoded.profile)

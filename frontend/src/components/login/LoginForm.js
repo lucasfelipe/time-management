@@ -1,9 +1,10 @@
 import React from "react";
 import { withFormik, Form } from "formik";
 import CustomTextField from "../../commons/CustomTextField";
-import FlatButton from "material-ui/FlatButton";
 import Yup from "yup";
 import { withRouter } from "react-router-dom";
+import RaisedButton from "material-ui/RaisedButton/RaisedButton";
+
 
 let LoginForm = props => {
   let { handleSubmit, values } = props;
@@ -31,10 +32,10 @@ let LoginForm = props => {
           name="password"
           type="password"
         />
-        <FlatButton
+        <RaisedButton
           key="submit_button"
           type="submit"
-          label="Login"
+          label="Sign In"
           primary={true}
           keyboardFocused={true}
         />

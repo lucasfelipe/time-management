@@ -33,12 +33,12 @@ const listAllTasks = payload => ({
 export const fetchAll = () => {
   return dispatch => {
     return httpGet("/tasks").then(response => {
-      let { success, tasks, error } = response;
+      let { success, error } = response;
       if (error) {
         toastr.error("Error", error);
         return Promise.reject(response);
       } else {
-        dispatch(listAllTasks(tasks));
+        dispatch(listAllTasks(success.tasks));
       }
     });
   };
@@ -54,13 +54,13 @@ export const saveTask = task => {
   return dispatch => {
     return httpPost("/tasks", { task })
       .then(response => {
-        let { success, task, error } = response;
+        let { success, error } = response;
         if (error) {
-          toastr.error("Error", error);
+          toastr.error("Error", error.message);
           return Promise.reject(response);
         } else {
           dispatch(hide('addTask'))
-          toastr.success("Success", `${task.taskname} saved`);
+          toastr.success("Success", `${success.task.taskname} saved`);
           dispatch(fetchAll())
         }
       })

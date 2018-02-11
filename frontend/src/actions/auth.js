@@ -19,7 +19,7 @@ function receiveLogout() {
 export function logoutUser() {
   return dispatch => {
     dispatch(requestLogout());
-    localStorage.removeItem("access_token");
+    localStorage.clear()
     dispatch(receiveLogout());
   };
 }
@@ -98,8 +98,7 @@ export function verifyToken() {
       .then(response => {
         let { success } = response;
         if (!success) {
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("current_user");
+          localStorage.clear()
           dispatch(tokenExpired())
           return Promise.reject(response);
         } else {

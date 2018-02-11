@@ -13,22 +13,23 @@ router.post('/', function(req, res, next) {
     // const task = {...req.body.task, createdAt: new Date()};
     //task.timeSpent = moment().add(task.timeSpent, 'h');
     task.save().then(() => console.log('ok'), err => console.log(err));
-    res.json({task, success: true});
+    res.json({ success: { task } });
 });
 router.get('/', function(req, res, next) {
     Task.find({}, function(err, tasks){
-        if(err) console.log(err);
-        console.log(tasks);
-        res.json({success: true, tasks: tasks, error: err});
+        if(err) 
+            res.status(500).send({ error: { message: "Could not retrieve tasks" } });
+            
+        res.json({ success: { tasks } });
     });
 });
 
 router.get('/:id', function(req, res, next) {
   Task.findById(req.params.id, function(err, task) {
         if(err) {
-            res.status(500).send({message: "Could not retrieve task with id " + req.params.id});
+            res.status(500).send({ error: { message: "Could not retrieve task with id " + req.params.id } });
         } else {
-            res.send( {ok: { task } } );
+            res.send( {success: { task } } );
         }
     });
 })
@@ -37,7 +38,7 @@ router.get('/:id', function(req, res, next) {
 router.put('/:id', function(req, res, next) {
     Task.findOneAndUpdate({_id: req.params.id}, req.body.task, function(err, data) {
         if(err) {
-            res.status(500).send({message: "Could not update task with id " + req.params.id});
+            res.status(500).send({error: { message: "Could not update task with id " + req.params.id } });
         } else {
             res.send( {success: { user: data } } );
         }

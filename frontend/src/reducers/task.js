@@ -1,8 +1,7 @@
 import Constants from "../constants";
 
 const initialState = {
-
-  //NEED TO DEFINE THE STATUS
+  
 };
 
 export default (state = initialState, action) => {
@@ -13,8 +12,6 @@ export default (state = initialState, action) => {
       return { ...state, task: action.payload };
     case 'ADD_NOTE':
       let { task, note } = action.payload;
-      console.log(note)
-      console.log(task)
       let newList = state.tasks.map(e => {
         if(e._id === task._id) {
           return {...e, notes: [note, ...e.notes]}

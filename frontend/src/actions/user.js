@@ -18,6 +18,7 @@ export const handleRemove = id => {
           return Promise.reject(response);
         } else {
           dispatch(userRemoved(users));
+
           dispatch(fetchAllUsers())
           
         }
@@ -80,7 +81,7 @@ const newUserCreated = payload => ({
   payload
 });
 
-export const saveUser = user => {
+export const saveUser = (user, shouldFetchUsers) => {
   return dispatch => {
     return httpPost("/users", { user })
       .then(response => {
@@ -92,7 +93,9 @@ export const saveUser = user => {
           dispatch(hide('addUser'))
           toastr.success("Success", `${user.username} saved`);
           dispatch(newUserCreated(user));
-          dispatch(fetchAllUsers())
+          if(shouldFetchUsers) {
+            dispatch(fetchAllUsers())
+          }
         }
       })
       .catch(err => console.log("Error: ", err));
