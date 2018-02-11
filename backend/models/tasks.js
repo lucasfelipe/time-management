@@ -2,10 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
-    taskname: String,
-    time: Number,
+    timeSpent: Number,
     day: Date,
-    owner: String,
+    owner: { type: Schema.Types.ObjectId, ref: 'User' },
     createdAt: Date
 })
 

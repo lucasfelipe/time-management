@@ -1,4 +1,5 @@
 var Task = require('../models/tasks');
+var User = require('../models/users');
 
 module.exports = {
     index: async (req, res) => {
@@ -8,8 +9,11 @@ module.exports = {
 
     save: async (req, res) => {
         let task = req.body.task;
+        
         task =  new Task({...task, createdAt: new Date()});
-        await task.save();
+        console.log(task)
+        task = await task.save();
+        console.log(task)
         res.json({ success: { task } });
     },
 

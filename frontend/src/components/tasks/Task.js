@@ -1,13 +1,14 @@
 import React from "react";
 import Moment from "moment";
+
 import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText
-} from "material-ui/Card";
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 import RaisedButton from "material-ui/RaisedButton";
 import Toggle from "material-ui/Toggle";
 
@@ -20,32 +21,21 @@ const Task = props => {
   }
 
   return (
-    <div>
-      <Card style={style}>
-        <CardHeader
-          title={task.taskname}
-          actAsExpander={false}
-          showExpandableButton={false}
-        />
-        {/* <CardText>{Moment(task.timeSpent).format("MM dddd, hA")}</CardText> */}
-        <CardText>{task.time}</CardText>
-        <CardTitle
-          title="Card title"
-          subtitle="Card subtitle"
-          expandable={true}
-        />
-        <CardActions>
-          <RaisedButton 
-            primary={true} 
-            label="EDIT" 
-            onClick={() => handleEdit(task)} />
-          <RaisedButton 
-            secondary={true} 
-            label="REMOVE" 
-            onClick={() => handleRemove(task._id)} />
-        </CardActions>
-      </Card>
-    </div>
+      <TableRow selectable={false}>
+        <TableRowColumn style={{width: '30%'}}>{task.day || '-'}</TableRowColumn>
+        <TableRowColumn style={{width: '20%'}}>{task.timeSpent || '-'}</TableRowColumn>
+        <TableRowColumn style={{width: '25%'}}>{task.createdAt || '-'}</TableRowColumn>
+        <TableHeaderColumn style={{width: '25%'}}>
+            <RaisedButton 
+              primary={true} 
+              label="EDIT" 
+              onClick={() => handleEdit(task)} />
+            <RaisedButton 
+              secondary={true} 
+              label="REMOVE" 
+              onClick={() => handleRemove(task._id)} />
+        </TableHeaderColumn>
+      </TableRow>
   );
 };
 

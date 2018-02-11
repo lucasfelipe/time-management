@@ -1,13 +1,15 @@
 import React from "react";
 import Moment from "moment";
+
 import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText
-} from "material-ui/Card";
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+
 import RaisedButton from "material-ui/RaisedButton";
 import Toggle from "material-ui/Toggle";
 
@@ -19,24 +21,16 @@ const User = props => {
   }
 
   return (
-      <Card style={style}>
-        <CardHeader
-          title={user.username}
-          actAsExpander={false}
-          showExpandableButton={false}
-        />
-        <CardText>{user.preferedHoursPerDay}</CardText>
-        <CardTitle
-          title="Card title"
-          subtitle="Card subtitle"
-          expandable={true}
-        />
-        <CardText expandable={true} />
-        <CardActions>
-          <RaisedButton primary={true} onClick={() => handleEdit(user)} label="Edit" />
-          <RaisedButton secondary={true} onClick={() => handleRemove(user._id)} label="Remove" />
-        </CardActions>
-      </Card>
+      <TableRow selectable={false}>
+        <TableRowColumn style={{width: '30%'}}>{user.username || '-'}</TableRowColumn>
+        <TableRowColumn style={{width: '20%'}}>{user.role || '-'}</TableRowColumn>
+        <TableRowColumn style={{width: '20%'}}>{user.preferedHoursPerDay || '-'}</TableRowColumn>
+        <TableRowColumn style={{width: '25%'}}>{user.createdAt || '-'}</TableRowColumn>
+        <TableHeaderColumn style={{width: '25%'}}>
+            <RaisedButton primary={true} onClick={() => handleEdit(user)} label="Edit" />
+            <RaisedButton secondary={true} onClick={() => handleRemove(user._id)} label="Remove" />
+        </TableHeaderColumn>
+      </TableRow>
   );
 };
 

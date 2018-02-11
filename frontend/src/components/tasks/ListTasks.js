@@ -1,6 +1,15 @@
 import React from "react";
 import Task from "./Task";
 
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+
 let ListTasks = props => {
   const { handleViewAll, handleAddNote, tasks } = props;
 
@@ -29,7 +38,19 @@ let ListTasks = props => {
     <div>
       <h1 style={styles.titleStyle}>Task Board</h1>
       <div style={styles.root}>
-        {taskView}
+        <Table selectable={false}>
+          <TableHeader displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn style={{width: '25%'}}>Date</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '25%'}}>TimeSpent</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '25%'}}>Created At</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '25%'}}>Actions</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+             {taskView}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

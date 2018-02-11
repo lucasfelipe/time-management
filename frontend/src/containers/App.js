@@ -31,11 +31,6 @@ class App extends Component {
   }
 }
 
-// App.propTypes = {
-//   dispatch: PropTypes.func.isRequired,
-//   isAuthenticated: PropTypes.bool.isRequired
-// }
-
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   sideBarOpened: state.sidebar.opened,

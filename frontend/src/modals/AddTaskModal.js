@@ -14,7 +14,7 @@ class AddTaskModal extends Component {
   
 
   render() {
-    const { show, handleHide, handleSubmit } = this.props;
+    const { show, handleHide, handleSubmit, users } = this.props;
 
     const customContentStyle = {
       width: "300px",

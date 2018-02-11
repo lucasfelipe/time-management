@@ -6,10 +6,12 @@ import RaisedButton from "material-ui/RaisedButton";
 import CustomTextField from "../../commons/CustomTextField";
 import DatePicker from 'material-ui/DatePicker';
 import CustomDatePicker from "../../commons/CustomDatePicker";
+import CustomSelectField from "../../commons/CustomSelectField";
 
 let TaskForm = props => {
   const { 
     values, 
+    users,
     handleReset, 
     handleSubmit,
     handleChange,
@@ -33,19 +35,20 @@ let TaskForm = props => {
     />
   ];
 
+  const usersMap = users.map(e => ({value: e._id, text: e.username}))
+
   return (
     <Form className="form" onSubmit={handleSubmit}>
-      <CustomTextField
-        hintText="Name"
-        fullWidth={true}
-        floatingLabelText="Name"
-        name="taskname"
+      <CustomSelectField
+        floatingLabelText="To"
+        options={usersMap}
+        name="owner"
       />
       <CustomTextField
         hintText="Time Spent"
         fullWidth={true}
         floatingLabelText="Time Spent"
-        name="time"
+        name="timeSpent"
       />
       <CustomDatePicker
         hintText="date"
@@ -60,32 +63,31 @@ let TaskForm = props => {
 TaskForm = withFormik({
   mapPropsToValues: props => {
 
-    
     if(props.task) {
       return {
         _id: props.task._id,
-        taskname: props.task.taskname,
-        time: props.task.time,
+        owner: props.task.owner,
+        timeSpent: props.task.timeSpent,
         day: props.task.day
       }
     } else {
        return {
         _id: undefined,
-        taskname: "",
-        time: "",
+        owner: "",
+        timeSpent: "",
         day: new Date()
       }
     }
   },
   validationSchema: Yup.object().shape({
-    taskname: Yup.string().required(),
-    time: Yup.number().required().min(1).max(24)
+    day: Yup.date().required(),
+    timeSpent: Yup.number().required().min(1).max(24)
   }),
   handleHide: (value, { props }) => {
     props.handleHide();
   },
   handleSubmit: (values, { props }) => {
-    console.log('values', values);
+    console.log(values);
     if(values._id === undefined) {
       props.handleSave(values);
     } else {

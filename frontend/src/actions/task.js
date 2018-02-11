@@ -7,7 +7,7 @@ import { hide } from "redux-modal";
 export const updateTask = task => {
 
   return dispatch => {
-
+    //task.owner = null;
     return httpPut('tasks', task._id, { task })
       .then(response => {
         let { ok, error } = response;
@@ -16,7 +16,7 @@ export const updateTask = task => {
         } else {
 
           dispatch(hide('addTask'))
-          toastr.success("Success", `${task.taskname} altered`);
+          toastr.success("Success", 'Altered');
           dispatch(fetchAll())
 
         }
@@ -50,7 +50,6 @@ const newTaskCreated = payload => ({
 });
 
 export const saveTask = task => {
-  console.log("saving task");
   return dispatch => {
     return httpPost("/tasks", { task })
       .then(response => {

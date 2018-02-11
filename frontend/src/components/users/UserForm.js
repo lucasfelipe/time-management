@@ -54,11 +54,11 @@ let UserForm = props => {
         name="password"
         type="password"
       />
-      {(!signUp || props.user.profile != 'USER') && 
+      {(!signUp || props.user.role != 'USER') && 
         <CustomSelectField
           floatingLabelText="Role"
           options={options}
-          name="profile"
+          name="role"
         />
       }
       
@@ -80,7 +80,7 @@ UserForm = withFormik({
     username: props.user.username || "",
     password: props.user.password || "",
     confirmPassword: "",
-    profile: props.user.profile || "USER",
+    role: props.user.role || "USER",
     preferedHoursPerDay: props.user.preferedHoursPerDay || ""
   }),
   validationSchema: Yup.object().shape({

@@ -12,14 +12,14 @@ export const handleRemove = id => {
   return dispatch => {
     return httpDelete("/users", id)
       .then(response => {
-        let { success, users, error } = response;
+        let { success, error } = response;
         if (error) {
           toastr.error("Error", error);
           return Promise.reject(response);
         } else {
-          dispatch(userRemoved(users));
-
+          dispatch(userRemoved(success.users));
           dispatch(fetchAllUsers())
+          toastr.success("Success", "Removed");
           
         }
       })

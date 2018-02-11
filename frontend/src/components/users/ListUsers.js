@@ -1,5 +1,13 @@
 import React from "react";
 import User from "./User";
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
 let ListUsers = props => {
   const { user } = props;
@@ -29,8 +37,21 @@ let ListUsers = props => {
   return (
     <div>
       <h1 style={styles.titleStyle}>User Board</h1>
-      
-      <div style={styles.root}>{userView}</div>
+      <Table selectable={false}>
+          <TableHeader displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn style={{width: '25%'}}>Username</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '25%'}}>Role</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '25%'}}>Prefered Hours Per Day</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '25%'}}>Created At</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '25%'}}>Actions</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+             {userView}
+          </TableBody>
+        </Table>
+
 
     </div>
   );

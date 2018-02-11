@@ -7,7 +7,7 @@ index = async (req, res) => {
 
 save = async (req, res) => {
     let { user } = req.body;
-    user = new User(user);
+    user = new User({...user, createdAt: new Date()});
     await user.save();
     res.status(200).json({ success: { user } });
 }

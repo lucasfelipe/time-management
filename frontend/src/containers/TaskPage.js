@@ -24,6 +24,7 @@ const style = {
 class TaskPage extends Component {
   componentDidMount() {
     this.props.fetchAll();
+    this.props.fetchAllUsers();
   }
 
   render() {
@@ -43,13 +44,17 @@ class TaskPage extends Component {
 
 const mapStateToProps = state => {
   return { 
-    tasks: state.task.tasks 
+    tasks: state.task.tasks,
+    users: state.user.users
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchAll: () => {
     dispatch(fetchAll());
+  },
+  fetchAllUsers: () => {
+    dispatch(fetchAllUsers())
   },
   handleNotes: (task) => {
     dispatch(show("showNotes", { task }));
@@ -58,7 +63,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addNote(task, note))
   },
   handleUpdate: (task) => {
-    console.log('atualizadno')
     dispatch(updateTask(task))
   },
   handleRemove: (taskId) => {
