@@ -1,0 +1,96 @@
+TODO: 
+
+
+add nodemoon
+make middleware to verify profile permissions
+choose the unit and integration test tools
+find the bests practices to structurate the express app
+make mockups from screens - ok
+define the rules to change the task colors
+find the best place to put the mongoose.connection
+create a config.js
+create a constant file
+
+frontend
+
+
+
+
+
+
+
+
+
+Desafio
+
+Dear Gilluan,
+
+We kindly ask that you complete the assignment below as part of your application.
+Please reply to confirm your availability to complete the assignment. If you have any further questions do not hesitate to contact me.
+
+Sincerely,
+
+Victor
+
+
+Desafio: Sistema de gerenciamento de tempos
+Usuario: criar uma conta e logar
+
+let User = Scheme({
+    username,
+    password,
+    preferredWorkingHourPerDay,
+    profile: ADMIN(pode visualizar e modificar tudo), 
+             REGULAR(Manter proprias tarefas), 
+             USER_MANAGER(Cadastrar Usuarios)
+})
+
+Usuario, criar o crud das tarefas:
+Usuario: se trabalhou nas horas preferidas a marcacao vai ficar vermelha, senao verde
+
+let Task = Scheme({
+    date: Date,
+    name: String,
+    timespent: String,
+    notes: [String]
+})
+
+let filter = {
+        date, 
+        timespent,
+        notes
+}
+
+criar autenticacao via API
+
+User must be able to create an account and log in
+User can add (and edit and delete) a row what he has worked on, what date, for how long
+User can add a setting (Preferred working hours per day)
+If on a certain date a user has worked under the PreferredWorkingHourPerDay, these rows are red, otherwise green.
+Implement at least three roles with different permission levels: a regular user would only be able to CRUD on their owned records, 
+a user manager would be able to CRUD users, and an admin would be able to CRUD all records and users.
+Filter entries by date from-to
+Export the filtered times to a sheet in HTML:
+Date: 21.5
+Total time: 9h
+Notes:
+Note1
+Note2
+Note3
+REST API. Make it possible to perform all user actions via the API, including authentication.
+In any case you should be able to explain how a REST API works and demonstrate that by creating functional tests that use the REST Layer directly. Please be prepared to use REST clients like Postman, cURL, etc for this purpose.
+All actions need to be done client side using AJAX, refreshing the page is not acceptable.
+Use React on the front-end and Node to build the API (you may add any other lib you want).
+Bonus: unit and e2e tests! (  :( )
+You will not be marked on graphic design, however, do try to keep it as tidy as possible.
+
+NOTE: Please keep in mind that this is the project that will be used to evaluate your skills. The project will be evaluated as if you were delivering it to a customer. We expect you to make sure that the app is fully functional and doesn’t have any obvious missing pieces. The deadline for the project is 2 weeks from today.
+
+
+
+
+
+
+
+
+
