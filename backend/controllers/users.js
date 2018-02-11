@@ -1,54 +1,32 @@
 var User = require('../models/users');
 
-index = (req, res) => {
-  User.find({}, function(err, users) {
-    res.json({success: true, users});
-  });
+index = async (req, res) => {
+    let users = await User.find({});
+    res.status(200).json({ success: {users} });
 }
 
-save = (req, res) => {
-
-    let user = new User({
-      username: req.body.user.username,
-      password: req.body.user.password,
-      profile: req.body.user.profile //ADMIN, REGULAR, USER_MANAGER
-    })
-    user.save().then(() => console.log('ok'));
-    res.json({user: user, success: true});
-
+save = async (req, res) => {
+    let { user } = req.body;
+    user = new User(user);
+    await user.save();
+    res.status(200).json({ success: { user } });
 }
 
-getById = (req, res) => {
-  User.findById(req.params.id, function(err, user) {
-        if(err) {
-            res.status(500).send({message: "Could not retrieve user with id " + req.params.id});
-        } else {
-            res.send( {ok: { user } } );
-        }
-    });
+getById = async (req, res) => {
+    let { id } = req.params;
+    let user =  await User.findById(id);
+    res.status(200).json({ success: { user } });
 }
 
-update = (req, res) => {
-    User.findOneAndUpdate({_id: req.params.id}, req.body.user, function(err, data) {
-        if(err) {
-            res.status(500).send({message: "Could not update user with id " + req.params.id});
-        } else {
-            res.send( {success: { user: data } } );
-        }
-    });
+update = async (req, res) => {
+    let user = await User.findOneAndUpdate({_id: req.params.id}, req.body.user);
+    res.status(200).json({ success: { user } });
 }
 
-remove = (req, res) => {
-   User.remove({_id: req.params.id}, function(err, data) {
-        if(err) {
-            res.status(500).send({message: "Could not delete user with id " + req.params.id});
-        } else {
-            res.send({ok: {
-                message: "Note deleted successfully!"
-                }
-            })
-        }
-    });
+remove = async (req, res) => {
+    let { id } = req.params;
+    await User.remove({ _id: id });
+    res.status(200).json({success: {message: "removed"}});
 }
 
 module.exports = {

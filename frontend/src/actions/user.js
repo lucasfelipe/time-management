@@ -39,12 +39,12 @@ export const fetchAllUsers = () => {
   return dispatch => {
     return httpGet("/users")
       .then(response => {
-        let { success, users, error } = response;
+        let { success, error } = response;
         if (error) {
           toastr.error("Error", error);
           return Promise.reject(response);
         } else {
-          dispatch(usersListed(users));
+          dispatch(usersListed(success.users));
         }
       })
       .catch(err => console.log("Error: ", err));
@@ -85,14 +85,14 @@ export const saveUser = (user, shouldFetchUsers) => {
   return dispatch => {
     return httpPost("/users", { user })
       .then(response => {
-        let { success, user, error } = response;
+        let { success, error } = response;
         if (error) {
           toastr.error("Error", error);
           return Promise.reject(response);
         } else {
           dispatch(hide('addUser'))
           toastr.success("Success", `${user.username} saved`);
-          dispatch(newUserCreated(user));
+          dispatch(newUserCreated(success.user));
           if(shouldFetchUsers) {
             dispatch(fetchAllUsers())
           }

@@ -26,6 +26,7 @@ export function logoutUser() {
 
 export function loginUser(credentials) {
   return dispatch => {
+    console.log(credentials);
     return httpPost("/login", credentials)
       .then(response => {
         let { user, success, token } = response;

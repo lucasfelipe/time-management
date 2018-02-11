@@ -1,12 +1,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-mongoose.connect('mongodb://localhost/mongo-db');
-
-module.exports = mongoose.model('User', new Schema({
+const userSchema = new Schema({
     username: String,
     password: String,
     preferedHoursPerDay: Number,
     notes: [String],
     profile: String //ADMIN, REGULAR, USER_MANAGER
-}));
+})
+
+const User = mongoose.model('user', userSchema);
+module.exports = User;
