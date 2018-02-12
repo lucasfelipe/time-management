@@ -18,7 +18,20 @@ module.exports = {
         user.tasks.push(task);
         res.json({ success: { task } });
     },
+    getByDatesFilter: async (req, res) => {
+        
+        
+        let {from, to} = req.query;
+        //TODO: VERIFY DATE PERIOD
+        let tasks = await Task.find({
+            day: {
+                $lt: to,
+                $gte: from
+            }
+        });
+        res.status(200).json({success: {tasks}});
 
+    },
     getById: async (req, res) => {
         let { id } = req.params;
         let task = await Task.findById(id);

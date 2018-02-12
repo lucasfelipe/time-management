@@ -1,4 +1,4 @@
-import { httpPost, httpGet, httpPut, httpDelete } from "../utils";
+import { httpPost, httpGet, httpPut, httpDelete, getUrlParam } from "../utils";
 import { push } from "react-router-redux"; 
 import { toastr } from "react-redux-toastr"; 
 import { hide } from "redux-modal";
@@ -49,6 +49,17 @@ const newTaskCreated = payload => ({
   payload
 });
 
+
+
+export const filterByPeriod = filter => {
+  return dispatch => {
+    return httpGet(`/tasks/${getUrlParam(filter)}`)
+      .then(response => {
+        dispatch(listAllTasks(response.success.tasks));
+        //console.log('respondeu tranquilo e suss', response.success.tasks)
+      });
+  }
+}
 export const saveTask = task => {
   return dispatch => {
     return httpPost("/tasks", { task })

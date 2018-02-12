@@ -1,4 +1,7 @@
 var User = require('../models/users')
+var jwt = require('jsonwebtoken');  
+var roles = require('../roles');
+
 
 
 const MY_SECRET_KEY = 'MY_SECRET_KEY';

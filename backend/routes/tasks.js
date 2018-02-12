@@ -7,9 +7,13 @@ router.route('/')
     .post(TaskController.save)
     .get(TaskController.index);
 
+router.route('/query')
+    .get(TaskController.getByDatesFilter)
+
 router.route('/:id')
     .get(TaskController.getById)
     .put(TaskController.update)
     .delete(TaskController.remove);
+
 
 module.exports = router

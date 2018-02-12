@@ -35,8 +35,6 @@ let ListTasks = props => {
   ));
 
   return (
-    <div>
-      <h1 style={styles.titleStyle}>Task Board</h1>
       <div style={styles.root}>
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
@@ -53,7 +51,6 @@ let ListTasks = props => {
           </TableBody>
         </Table>
       </div>
-    </div>
   );
 };
 

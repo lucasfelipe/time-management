@@ -60,6 +60,23 @@ export function httpDelete(url, id) {
   .then(parseJSON);
 }
 
+export const isObjectEmpty = (obj) => {
+    return !obj[Object.keys(obj)[0]];
+}
+
+export const getUrlParam = (obj) => {
+
+  let queryParam = new URLSearchParams();
+
+  if(isObjectEmpty(obj)) return "";
+
+  for(let i in obj) {
+      queryParam.append(i, obj[i]);
+  }
+
+  return `query?${queryParam.toString()}`
+}
+
 export function httpPut(url, id, data) {
   const body = JSON.stringify(data);
   return fetch(`${URL_API}/${url}/${id}`, {

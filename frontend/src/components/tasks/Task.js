@@ -16,7 +16,7 @@ const Task = props => {
 
   const { task, handleNotes, handleRemove, handleEdit } = props;
 
-  const formatDate = (date) => moment().format("DD.MM.YYYY");
+  const formatDate = (date) => moment(date).format("DD.MM.YYYY");
 
   return (
       <TableRow selectable={false} style={{backgroundColor: 'pink'}}>
