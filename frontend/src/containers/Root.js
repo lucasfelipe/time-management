@@ -38,12 +38,12 @@ const Root = ({ store, history }) => {
             <PrivateRouteContainer path="/" component={App} />
           </Switch>
           {/*<DevTools />*/}
-          <Snackbar
+          {/*<Snackbar
             open={true}
             message="Event added to your calendar"
             autoHideDuration={4000}
             onRequestClose={this.handleRequestClose}
-          />
+          />*/}
           
         </div>
         

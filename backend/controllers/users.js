@@ -31,10 +31,18 @@ remove = async (req, res) => {
     res.status(200).json({success: {message: "removed"}});
 }
 
+getUserCards = async (req, res) => {
+     let { id } = req.params;
+    let user =  await User.findById(id);
+    res.status(200).json({ success: { user } });
+
+}
+
 module.exports = {
     index,
     save,
     getById,
     update,
-    remove
+    remove,
+    getUserCards
 }

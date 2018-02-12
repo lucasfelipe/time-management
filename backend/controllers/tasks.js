@@ -1,6 +1,7 @@
 var Task = require('../models/tasks');
 var User = require('../models/users');
 
+
 module.exports = {
     index: async (req, res) => {
         const tasks = await Task.find({})
@@ -8,12 +9,10 @@ module.exports = {
     },
 
     save: async (req, res) => {
-        let task = req.body.task;
-        
+        let task = req.body.task;        
         task =  new Task({...task, createdAt: new Date()});
-        console.log(task)
-        task = await task.save();
-        console.log(task)
+        task.owner = await User.findById(userId);
+        task = await task.save(); 
         res.json({ success: { task } });
     },
 

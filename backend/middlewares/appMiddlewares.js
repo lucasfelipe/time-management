@@ -9,7 +9,7 @@ const configure = async (req, res, next) => {
     let userDefault = new User({ 
           username: 'admin', 
           password: 'admin',
-          profile: 'ADMIN' 
+          role: 'ADMIN' 
         });
     await userDefault.save();
     console.info('Default User created');

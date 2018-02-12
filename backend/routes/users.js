@@ -13,4 +13,7 @@ router.route('/:id')
     .put(UserController.update)
     .delete(UserController.remove);
 
+router.route('/:id/tasks')
+    .get(UserController.getUserCards)    
+
 module.exports = router;

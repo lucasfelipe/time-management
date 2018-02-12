@@ -28,6 +28,8 @@ login = async (req, res) => {
       var token = jwt.sign(payload, MY_SECRET_KEY, {
         expiresIn: "1h"
       });
+      console.log('roles', roles);
+      console.log('role', user.role)
       res.json({
         success: true,
         message: "Token Sucess!",
@@ -36,7 +38,7 @@ login = async (req, res) => {
           _id: user._id,
           username: user.username,
           role: user.role,
-          visibleRoutes: roles.find(e => e.role === user.role   ).routes
+          visibleRoutes: roles.find(e => e.role === user.role).routes
         }
       });
     }

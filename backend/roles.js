@@ -1,19 +1,19 @@
 var roles = [
     {
-        profile: 'ADMIN',
+        role: 'ADMIN',
         routes: [
             '/users',
             '/tasks'
         ]
     },
     {
-        profile: 'USER',
+        role: 'USER',
         routes: [
             '/tasks'
         ]
     },
     {
-        profile: 'MANAGER',
+        role: 'MANAGER',
         routes: [
             '/users',
             '/tasks'
