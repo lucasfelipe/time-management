@@ -1,5 +1,6 @@
 import React        from 'react';
 import fetch        from 'isomorphic-fetch';
+import moment from "moment";
 
 const URL_API = 'http://localhost:8000'
 
@@ -60,7 +61,7 @@ export function httpDelete(url, id) {
 }
 
 export const isObjectEmpty = (obj) => {
-    return !obj[Object.keys(obj)[0]];
+    return obj && !obj[Object.keys(obj)[0]];
 }
 
 export const getUrlParam = (obj) => {
@@ -105,3 +106,5 @@ export function renderErrorsFor(errors, ref) {
     return null;
   });
 }
+
+export const formatDate = (date) => moment(date).format("DD.MM.YYYY");

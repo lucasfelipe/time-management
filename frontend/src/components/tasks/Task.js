@@ -1,5 +1,5 @@
 import React from "react";
-import moment from "moment";
+
 
 import {
   TableHeaderColumn,
@@ -7,15 +7,16 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import RaisedButton from "material-ui/RaisedButton";
+import { formatDate } from "../../utils"
 
 const Task = props => {
 
   const { task, handleRemove, handleEdit } = props;
 
-  const formatDate = (date) => moment(date).format("DD.MM.YYYY");
+  
 
   return (
-      <TableRow selectable={false} style={{backgroundColor: 'pink'}}>
+      <TableRow selectable={false} >
         <TableRowColumn style={{width: '15%'}}>{formatDate(task.day) || '-'}</TableRowColumn>
         <TableRowColumn style={{width: '15%'}}>{task.timeSpent || '-'}</TableRowColumn>
         <TableRowColumn style={{width: '15%'}}>{formatDate(task.createdAt) || '-'}</TableRowColumn>

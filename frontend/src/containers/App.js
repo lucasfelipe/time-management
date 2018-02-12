@@ -6,6 +6,7 @@ import TaskPage from "./TaskPage";
 import UserPage from "./UserPage";
 import MyAccountPage from "./MyAccountPage";
 import Switch from "react-router-dom/Switch";
+import ReportPage from "./ReportPage";
 
 
 class App extends Component {
@@ -24,6 +25,8 @@ class App extends Component {
             <Route exact path="/" component={TaskPage} />
             <Route path="/users" component={UserPage} />
             <Route path="/my-account" component={MyAccountPage} />
+            <Route path="/report" component={ReportPage} />
+            
           </Switch>
         </div>
     );

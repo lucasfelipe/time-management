@@ -1,6 +1,9 @@
 import { httpPost, httpGet, httpPut, httpDelete } from "../utils";
 import { toastr } from "react-redux-toastr";
 import { hide } from "redux-modal";
+import Constants from "../constants";
+
+
 
 
 const userRemoved = payload => ({
@@ -28,10 +31,10 @@ export const handleRemove = id => {
 }
 
 
-export const USER_LISTED = "USER_LISTED";
+
 
 const usersListed = payload => ({
-  type: USER_LISTED,
+  type: Constants.USER_LISTED,
   payload
 });
 
@@ -52,6 +55,22 @@ export const fetchAllUsers = () => {
 };
 
 //USER ACTIONS
+
+export const findUserById = id => {
+  return dispatch => {
+    return httpGet(`/users/${id}`)
+      .then(response => {
+        dispatch(setCurrentUser(response.success.user))
+      })
+  }
+}
+
+
+const setCurrentUser = payload => ({
+  type: Constants.SET_CURRENT_USER,
+  payload
+});
+
 
 export const updateUser = user => {
   return dispatch => {

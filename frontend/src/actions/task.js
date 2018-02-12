@@ -1,12 +1,11 @@
 import { httpPost, httpGet, httpPut, httpDelete, getUrlParam } from "../utils";
 import { toastr } from "react-redux-toastr"; 
 import { hide } from "redux-modal";
+import Constants from '../constants/index';
 
 
 export const updateTask = task => {
-
   return dispatch => {
-    //task.owner = null;
     return httpPut('tasks', task._id, { task })
       .then(response => {
         let { error } = response;
@@ -22,8 +21,25 @@ export const updateTask = task => {
 
 }
 
+
+const filterReport = payload => ({
+  type: Constants.FILTER_REPORT,
+  payload
+})
+
+export const exportReport = filter => {
+  return dispatch => {
+    dispatch(filterReport(filter))
+  }
+}
+
 const listAllTasks = payload => ({
   type: LIST_ALL_TASKS,
+  payload
+});
+
+const listReportTasks = payload => ({
+  type: Constants.LIST_REPORT_TASKS,
   payload
 });
 
@@ -40,6 +56,16 @@ export const fetchAll = () => {
     });
   };
 };
+
+export const filterReportByPeriod = filter => {
+  return dispatch => {
+    return httpGet(`/tasks/${getUrlParam(filter)}`)
+      .then(response => {
+        dispatch(listReportTasks(response.success.tasks));
+        //console.log('respondeu tranquilo e suss', response.success.tasks)
+      });
+  }
+}
 
 export const filterByPeriod = filter => {
   return dispatch => {

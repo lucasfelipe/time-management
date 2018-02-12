@@ -4,10 +4,15 @@ import { withFormik, Form } from "formik";
 import FlatButton from "material-ui/FlatButton";
 import CustomDatePicker from "../../commons/CustomDatePicker";
 
-let TaskForm = props => {
+let FilterTaskForm = props => {
   const {
+    values,
     handleSubmit,
+    handleExport,
+    tasks
   } = props;
+
+  console.log(props)
 
   const styles = {
     formFilter: {
@@ -18,44 +23,44 @@ let TaskForm = props => {
   return (
     <Form className="form" style={styles.formFilter} onSubmit={handleSubmit}>
       <CustomDatePicker 
-        hintText="date" 
+        hintText="From" 
         name="from" 
         autoOk={true} 
       />
       <CustomDatePicker 
-        hintText="date" 
+        hintText="To" 
         name="to" 
         autoOk={true} 
       />
        <FlatButton
-        key="submit_button"
-        type="submit"
-        label="Filter"
-        primary={true}
-        keyboardFocused={true}
-    />
+          type="submit"
+          label="Filter"
+          primary={true}
+          keyboardFocused={true}
+      />
+      {tasks && 
+        <FlatButton
+            label="Export"
+            type="button"
+            secondary={true}
+            onClick={() => handleExport(values)}
+            keyboardFocused={true}
+        />
+      }   
     </Form>
   );
 };
-TaskForm = withFormik({
+FilterTaskForm = withFormik({
   mapPropsToValues: props => {
       return {
-        from: "",
-        to: ""
+        from: undefined,
+        to: undefined
       };
   },
   handleSubmit: (values, { props }) => {
-
-
     props.filterByPeriod(values);
-    // console.log(values);
-    // if (values._id === undefined) {
-    //   props.handleSave(values);
-    // } else {
-    //   props.handleUpdate(values);
-    // }
   },
   displayName: "FilterForm" // helps with React DevTools
-})(TaskForm);
+})(FilterTaskForm);
 
-export default TaskForm;
+export default FilterTaskForm;

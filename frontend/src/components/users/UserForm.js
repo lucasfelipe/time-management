@@ -10,6 +10,7 @@ let UserForm = props => {
   const {
     handleSubmit,
     handleHide,
+    user,
     fullWidth = true,
     signUp
   } = props;
@@ -21,7 +22,7 @@ let UserForm = props => {
       secondary={true}
       onClick={handleHide}
     />,
-    <RaisedButton key="submit" label="Submit" primary={true} type="submit" />
+    <RaisedButton key="submit" label={user && user._id ? 'Update' : 'Submit'} primary={true} type="submit" />
   ];
 
   const options = [

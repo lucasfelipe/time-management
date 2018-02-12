@@ -1,49 +1,49 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { withFormik, Field } from "formik";
-import Yup from "yup";
-import { saveUser, fetchAllUsers, handleRemove, updateUser } from "../actions/index";
-import { connect } from "react-redux";
-import UserForm from "../components/users/UserForm";
-import ListUsers from "../components/users/ListUsers";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import ContentAdd from "material-ui/svg-icons/content/add";
-import AddUserModal from "../modals/AddUserModal";
-import { show } from "redux-modal";
 
-const style = {
-    right: 20,
-    bottom: 20,
-    position: 'fixed'
-};
+import { connect } from "react-redux";
+import { filterReportByPeriod } from "../actions";
+import ListReportTasks from "../components/tasks/ListReportTasks"
+
+// const style = {
+//     right: 20,
+//     bottom: 20,
+//     position: 'fixed'
+// };
+
+ const titleStyle =  {
+      color: 'rgb(0, 188, 212)',
+      textAlign: 'center'
+}
 
 class ReportPage extends Component {
   componentDidMount() {
-      //TODO: getReport
-    //this.props.getReport();
-  }
+    
+    const { getReport, filter} = this.props;
+    
+    getReport(filter);
+  
+}
 
   render() {
-    const { user, handleAddUser } = this.props;
+    let {tasks} = this.props;
     return (
       <div>
-        {user && <ListUsers {...this.props} />}
-        <FloatingActionButton onClick={handleAddUser} style={style}>
-          <ContentAdd />
-        </FloatingActionButton>
-        <AddUserModal name="addUser" {...this.props} />
+        <h1 style={titleStyle}>My Report page</h1>
+        {tasks && <ListReportTasks tasks={tasks} />}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  user
+const mapStateToProps = ({ task }) => ({
+  filter: task.filter,
+  tasks: task.tasksReport,
 });
 
 const mapDispatchToProps = dispatch => ({
-  showDateByParameter: user => {
-    dispatch(saveUser(user, true));
+  getReport: filter => {
+    dispatch(filterReportByPeriod(filter));
   }
 });
 

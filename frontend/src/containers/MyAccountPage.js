@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
-import { updateUser } from "../actions/index";
+import { updateUser, findUserById } from "../actions/index";
 import { connect } from "react-redux";
 import UserForm from "../components/users/UserForm";
 
@@ -18,26 +18,27 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center'
   },
-   titleStyle: {
-      color: 'rgb(0, 188, 212)',
-      textAlign: 'center'
-    },
+  titleStyle: {
+    color: 'rgb(0, 188, 212)',
+    textAlign: 'center'
+  },
 };
 
 class MyAccountPage extends Component {
+
   componentDidMount() {
-   // this.props.fetchAllUsers();
+    let { id } = this.props
+    this.props.findUserById(id);
   }
 
-  render() {
-    
+  render() {  
     return (
       <div style={styles.body}>
         <Paper style={styles.paper}>
           <h1 style={styles.titleStyle}>Task Board</h1>
           <Divider />
           <div style={{margin: '45px'}}>
-          <UserForm fullWidth={false} {...this.props}/>
+          {this.props.user && <UserForm fullWidth={false} {...this.props}/>}
           </div>
         </Paper>
       </div>
@@ -45,14 +46,18 @@ class MyAccountPage extends Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => ({
-  user: auth.authenticatedUser
+const mapStateToProps = ({ auth, user }) => ({
+  user: user.currentUser,
+  id: auth.authenticatedUser._id
 });
 
 const mapDispatchToProps = dispatch => ({
   handleUpdate: user => {
     dispatch(updateUser(user));
   },
+  findUserById: id => {
+    dispatch(findUserById(id))
+  }
 });
 
 export default withRouter(

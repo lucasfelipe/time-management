@@ -8,6 +8,7 @@ import { fetchAll,
   updateTask, 
   removeTask,
   filterByPeriod,
+  exportReport,
   addNote } from "../actions/index";
 import Paper from "material-ui/Paper";
 import Divider from "material-ui/Divider";
@@ -16,6 +17,7 @@ import AddTaskModal from "../modals/AddTaskModal"
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import FilterTaskForm from "../components/tasks/FilterTaskForm";
+import { push } from "react-router-redux";
 
 
 
@@ -42,7 +44,7 @@ const styles = {
 
 class TaskPage extends Component {
   componentDidMount() {
-    this.props.fetchAll();
+    //this.props.fetchAll();
     this.props.fetchAllUsers();
   }
 
@@ -102,9 +104,13 @@ const mapDispatchToProps = dispatch => ({
   handleAddTask: (task) => {
       dispatch(show("addTask"));
   },
-   filterByPeriod: (filter) => {
-     dispatch(filterByPeriod(filter))
-   }
+  filterByPeriod: (filter) => {
+    dispatch(filterByPeriod(filter))
+  },
+  handleExport: (value) => {
+    dispatch(exportReport(value));
+    dispatch(push(`/report`))
+  }
 });
 
 export default withRouter(
