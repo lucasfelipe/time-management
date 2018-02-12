@@ -7,7 +7,7 @@ index = async (req, res) => {
 
 save = async (req, res) => {
     let { user } = req.body;
-    user = new User({...user, createdAt: new Date()});
+    user = new User({...user, createdAt: new Date() });
     await user.save();
     res.status(200).json({ success: { user } });
 }
@@ -32,10 +32,9 @@ remove = async (req, res) => {
 }
 
 getUserCards = async (req, res) => {
-     let { id } = req.params;
+    let { id } = req.params;
     let user =  await User.findById(id);
     res.status(200).json({ success: { user } });
-
 }
 
 module.exports = {

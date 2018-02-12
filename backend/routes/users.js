@@ -14,6 +14,6 @@ router.route('/:id')
     .delete(UserController.remove);
 
 router.route('/:id/tasks')
-    .get(UserController.getUserCards)    
+    .get(UserController.getUserCards)
 
 module.exports = router;

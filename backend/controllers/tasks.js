@@ -5,14 +5,17 @@ var User = require('../models/users');
 module.exports = {
     index: async (req, res) => {
         const tasks = await Task.find({})
-        res.status(200).json({ success: { tasks } });
+        res.status(200).json({ success: { tasks } });   
     },
 
     save: async (req, res) => {
         let task = req.body.task;        
         task =  new Task({...task, createdAt: new Date()});
-        task.owner = await User.findById(userId);
+        let userId = task.owner;
+        let user = await User.findById(userId);
         task = await task.save(); 
+        console.log(user);
+        user.tasks.push(task);
         res.json({ success: { task } });
     },
 

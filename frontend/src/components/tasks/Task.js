@@ -1,5 +1,5 @@
 import React from "react";
-import Moment from "moment";
+import moment from "moment";
 
 import {
   Table,
@@ -16,15 +16,14 @@ const Task = props => {
 
   const { task, handleNotes, handleRemove, handleEdit } = props;
 
-  const style = {
-    margin: 10
-  }
+  const formatDate = (date) => moment().format("DD.MM.YYYY");
 
   return (
-      <TableRow selectable={false}>
-        <TableRowColumn style={{width: '30%'}}>{task.day || '-'}</TableRowColumn>
-        <TableRowColumn style={{width: '20%'}}>{task.timeSpent || '-'}</TableRowColumn>
-        <TableRowColumn style={{width: '25%'}}>{task.createdAt || '-'}</TableRowColumn>
+      <TableRow selectable={false} style={{backgroundColor: 'pink'}}>
+        <TableRowColumn style={{width: '15%'}}>{formatDate(task.day) || '-'}</TableRowColumn>
+        <TableRowColumn style={{width: '15%'}}>{task.timeSpent || '-'}</TableRowColumn>
+        <TableRowColumn style={{width: '15%'}}>{formatDate(task.createdAt) || '-'}</TableRowColumn>
+        <TableRowColumn style={{width: '35%'}}>{task.note || '-'}</TableRowColumn>
         <TableHeaderColumn style={{width: '25%'}}>
             <RaisedButton 
               primary={true} 

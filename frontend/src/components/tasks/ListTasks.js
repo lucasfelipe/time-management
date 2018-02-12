@@ -41,9 +41,10 @@ let ListTasks = props => {
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
             <TableRow>
-              <TableHeaderColumn style={{width: '25%'}}>Date</TableHeaderColumn>
-              <TableHeaderColumn style={{width: '25%'}}>TimeSpent</TableHeaderColumn>
-              <TableHeaderColumn style={{width: '25%'}}>Created At</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '10%'}}>Date</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '15%'}}>TimeSpent</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '15%'}}>Created At</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '35%'}}>Notes</TableHeaderColumn>
               <TableHeaderColumn style={{width: '25%'}}>Actions</TableHeaderColumn>
             </TableRow>
           </TableHeader>
