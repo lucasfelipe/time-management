@@ -10,7 +10,6 @@ import PrivateRouteContainer from "./PrivateRouteContainer";
 import ReduxToastr from "react-redux-toastr";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
-//import RepoPage from './RepoPage'
 
 const Root = ({ store, history }) => {
   console.log("STORE", store);
