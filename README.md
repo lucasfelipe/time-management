@@ -15,6 +15,7 @@ To start your Time management app:
 Now you can visit [`http://localhost:3000/`](http://localhost:3000/) from your browser.
 
 Username: admin
+
 Password: admin
 
 Enjoy!
