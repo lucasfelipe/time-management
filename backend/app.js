@@ -40,6 +40,6 @@ app.use(appMiddlewares.configure);
 app.use(appMiddlewares.verifyToken);
 app.use(appMiddlewares.checkRole);
 app.use(appMiddlewares.notFound);
-//app.use(appMiddlewares.devErrors);
+app.use(appMiddlewares.devErrors);
 
 module.exports = app;
