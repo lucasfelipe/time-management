@@ -1,6 +1,5 @@
 import React        from 'react';
 import fetch        from 'isomorphic-fetch';
-import { polyfill } from 'es6-promise';
 
 const URL_API = 'http://localhost:8000'
 
@@ -103,5 +102,6 @@ export function renderErrorsFor(errors, ref) {
         </div>
       );
     }
+    return null;
   });
 }

@@ -1,24 +1,16 @@
 import React from "react";
-import Moment from "moment";
+
 
 import {
-  Table,
-  TableBody,
-  TableHeader,
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
 
 import RaisedButton from "material-ui/RaisedButton";
-import Toggle from "material-ui/Toggle";
 
 const User = props => {
   const { user, handleEdit, handleRemove } = props;
-
-  const style = {
-    margin: 20
-  }
 
   return (
       <TableRow selectable={false}>

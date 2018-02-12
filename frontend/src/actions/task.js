@@ -1,5 +1,4 @@
 import { httpPost, httpGet, httpPut, httpDelete, getUrlParam } from "../utils";
-import { push } from "react-router-redux"; 
 import { toastr } from "react-redux-toastr"; 
 import { hide } from "redux-modal";
 
@@ -10,15 +9,13 @@ export const updateTask = task => {
     //task.owner = null;
     return httpPut('tasks', task._id, { task })
       .then(response => {
-        let { ok, error } = response;
+        let { error } = response;
         if (error) {
           Promise.reject(error);
         } else {
-
           dispatch(hide('addTask'))
           toastr.success("Success", 'Altered');
           dispatch(fetchAll())
-
         }
       })
   }
@@ -43,13 +40,6 @@ export const fetchAll = () => {
     });
   };
 };
-
-const newTaskCreated = payload => ({
-  type: NEW_TASK_CREATED,
-  payload
-});
-
-
 
 export const filterByPeriod = filter => {
   return dispatch => {
@@ -84,11 +74,6 @@ export const NEW_TASK_CREATED = "NEW_TASK_CREATED";
 export const LIST_ALL_TASKS = "LIST_ALL_TASKS";
 export const NOTE_ADDED = "NOTE_ADDED";
 export const ADD_NOTE = "ADD_NOTE";
-
-const noteAdded = payload => ({
-  type: NOTE_ADDED,
-  payload
-});
 
 export const addNote = (task, note) => {
   return {

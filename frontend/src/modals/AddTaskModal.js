@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connectModal } from "redux-modal";
 import Dialog from "material-ui/Dialog";
-import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import TaskForm from "../components/tasks/TaskForm";
 
@@ -14,7 +13,7 @@ class AddTaskModal extends Component {
   
 
   render() {
-    const { show, handleHide, handleSubmit, users } = this.props;
+    const { show } = this.props;
 
     const customContentStyle = {
       width: "300px",

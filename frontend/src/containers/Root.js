@@ -4,15 +4,11 @@ import { Provider } from "react-redux";
 import DevTools from "./DevTools";
 import { Route, Switch } from "react-router-dom";
 import App from "./App";
-import UserPage from "./UserPage";
-import TaskPage from "./TaskPage";
 import LoginPage from "../containers/LoginPage";
 import { ConnectedRouter } from "react-router-redux";
 import PrivateRouteContainer from "./PrivateRouteContainer";
-import NavBar from "../commons/NavBar";
 import ReduxToastr from "react-redux-toastr";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import Snackbar from "material-ui/Snackbar"
 
 //import RepoPage from './RepoPage'
 
@@ -37,7 +33,7 @@ const Root = ({ store, history }) => {
             <Route path="/login" component={LoginPage} />
             <PrivateRouteContainer path="/" component={App} />
           </Switch>
-          {/*<DevTools />*/}
+          <DevTools />
           {/*<Snackbar
             open={true}
             message="Event added to your calendar"

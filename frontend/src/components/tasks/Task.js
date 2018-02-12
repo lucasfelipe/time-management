@@ -2,19 +2,15 @@ import React from "react";
 import moment from "moment";
 
 import {
-  Table,
-  TableBody,
-  TableHeader,
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
 import RaisedButton from "material-ui/RaisedButton";
-import Toggle from "material-ui/Toggle";
 
 const Task = props => {
 
-  const { task, handleNotes, handleRemove, handleEdit } = props;
+  const { task, handleRemove, handleEdit } = props;
 
   const formatDate = (date) => moment(date).format("DD.MM.YYYY");
 

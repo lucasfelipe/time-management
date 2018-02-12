@@ -1,18 +1,16 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import NavBar from "../commons/NavBar";
-import { loginUser } from "../actions";
-import LoginPage from "../containers/LoginPage";
 import { withRouter, Route } from "react-router-dom";
 import TaskPage from "./TaskPage";
 import UserPage from "./UserPage";
+import MyAccountPage from "./MyAccountPage";
 import Switch from "react-router-dom/Switch";
-import PrivateRouteContainer from "./PrivateRouteContainer";
 
 
 class App extends Component {
   render() {
-    const { dispatch, isAuthenticated, sideBarOpened, visibleRoutes } = this.props;
+    const { dispatch, sideBarOpened, visibleRoutes } = this.props;
     return (
       
         <div>
@@ -25,6 +23,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={TaskPage} />
             <Route path="/users" component={UserPage} />
+            <Route path="/my-account" component={MyAccountPage} />
           </Switch>
         </div>
     );

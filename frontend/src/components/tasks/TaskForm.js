@@ -1,21 +1,15 @@
 import React from "react";
-import { withFormik, Field, Form } from "formik";
+import { withFormik, Form } from "formik";
 import Yup from "yup";
 import FlatButton from "material-ui/FlatButton";
-import RaisedButton from "material-ui/RaisedButton";
 import CustomTextField from "../../commons/CustomTextField";
-import DatePicker from "material-ui/DatePicker";
 import CustomDatePicker from "../../commons/CustomDatePicker";
 import CustomSelectField from "../../commons/CustomSelectField";
 
 let TaskForm = props => {
   const {
-    values,
     users,
-    handleReset,
     handleSubmit,
-    handleChange,
-    handleBlur,
     handleHide
   } = props;
 

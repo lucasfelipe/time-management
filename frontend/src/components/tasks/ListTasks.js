@@ -7,11 +7,10 @@ import {
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn,
 } from 'material-ui/Table';
 
 let ListTasks = props => {
-  const { handleViewAll, handleAddNote, tasks } = props;
+  const { tasks } = props;
 
   const styles = {
     root: {

@@ -11,8 +11,7 @@ import { fetchAll,
   addNote } from "../actions/index";
 import Paper from "material-ui/Paper";
 import Divider from "material-ui/Divider";
-import { show , handleHide} from "redux-modal";
-import NotesModal from "../modals/NotesModal";
+import { show } from "redux-modal";
 import AddTaskModal from "../modals/AddTaskModal"
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
@@ -34,6 +33,10 @@ const styles = {
       color: 'rgb(0, 188, 212)',
       textAlign: 'center'
     },
+    filterPosition: {
+      textAlign: 'center',
+      margin: '30px'
+    }
   };
 
 
@@ -53,10 +56,11 @@ class TaskPage extends Component {
         <Paper style={styles.container} zDepth={2}>
           <AddTaskModal name="addTask" {...this.props} />
           <h1 style={styles.titleStyle}>Task Board</h1>
-          <FilterTaskForm {...this.props} />
+          <div style={styles.filterPosition}>
+            <FilterTaskForm {...this.props} />
+          </div>
           <Divider />
           {tasks && <ListTasks {...this.props} />}
-          <NotesModal name="showNotes" {...this.props} />
         </Paper>
       </div>
     );

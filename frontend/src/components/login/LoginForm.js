@@ -2,12 +2,11 @@ import React from "react";
 import { withFormik, Form } from "formik";
 import CustomTextField from "../../commons/CustomTextField";
 import Yup from "yup";
-import { withRouter } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton/RaisedButton";
 
 
 let LoginForm = props => {
-  let { handleSubmit, values } = props;
+  let { handleSubmit } = props;
   const styles = {
     titleStyle: {
       color: 'rgb(0, 188, 212)',
