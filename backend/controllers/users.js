@@ -7,6 +7,15 @@ index = async (req, res) => {
 
 save = async (req, res) => {
     let { user } = req.body;
+
+    let qtd = await User.find({username: user.username}).count();
+    console.log(`exists`, qtd);
+
+    if(qtd > 0) {
+        res.status(500).json({error: {message: 'Username already exists!'}})
+        return;
+    }
+
     user = new User({...user, createdAt: new Date() });
     await user.save();
     res.status(200).json({ success: { user } });
@@ -31,17 +40,10 @@ remove = async (req, res) => {
     res.status(200).json({success: {message: "removed"}});
 }
 
-getUserCards = async (req, res) => {
-    let { id } = req.params;
-    let user =  await User.findById(id);
-    res.status(200).json({ success: { user } });
-}
-
 module.exports = {
     index,
     save,
     getById,
     update,
-    remove,
-    getUserCards
+    remove
 }

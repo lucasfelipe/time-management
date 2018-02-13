@@ -5,7 +5,7 @@ const userSchema = new Schema({
     username: String,
     password: String,
     preferedHoursPerDay: Number,
-    role: String, //ADMIN, REGULAR, USER_MANAGER
+    role: String,
     createdAt: Date,
     tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
 })
