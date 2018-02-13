@@ -53,7 +53,7 @@ let FilterTaskForm = props => {
           primary={true}
           keyboardFocused={true}
       />
-      {tasks && tasks[0] &&
+      {tasks && tasks[0] && values.to && values.from &&
         <FlatButton
             label="Export"
             type="button"

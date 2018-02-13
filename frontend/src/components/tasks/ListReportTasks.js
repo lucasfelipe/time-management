@@ -38,7 +38,7 @@ let ListTasks = props => {
   let taskView = tasks.map((task, i) => (
      <TableRow key={i} selectable={false} style={{backgroundColor: task.totalTime > preferedHours ? 'green': 'red'}}>
         <TableRowColumn style={{width: '25%'}}>{formatDate(task.day) || '-'}</TableRowColumn>
-        <TableRowColumn style={{width: '15%'}}>{`${formatTotalTime(task.totalTime)}h` || '-'}</TableRowColumn>
+        <TableRowColumn style={{width: '15%'}}>{`${formatTotalTime(task.totalTime)}` || '-'}</TableRowColumn>
         <TableRowColumn style={{width: '35%'}}>
           <List>
             {task.notes.map((e, idx) => itemNote(e, idx))}
