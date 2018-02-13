@@ -33,7 +33,8 @@ const styles = {
     },
     titleStyle: {
       color: 'rgb(0, 188, 212)',
-      textAlign: 'center'
+      textAlign: 'center',
+      padding: '30px'
     },
     filterPosition: {
       textAlign: 'center',
@@ -57,7 +58,7 @@ class TaskPage extends Component {
         </FloatingActionButton>
         <Paper style={styles.container} zDepth={2}>
           <AddTaskModal name="addTask" {...this.props} />
-          <h1 style={styles.titleStyle}>Task Board</h1>
+            <h1 style={styles.titleStyle}>Task Board</h1>
           <div style={styles.filterPosition}>
             <FilterTaskForm {...this.props} />
           </div>

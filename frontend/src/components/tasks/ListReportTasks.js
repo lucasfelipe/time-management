@@ -31,12 +31,14 @@ let ListTasks = props => {
     },
   };
 
+  let formatTotalTime = (totalTime) => `${totalTime}/ ${totalTime > 1 ? 'hs': 'h'}`
+
   let itemNote = (item, idx) => (<ListItem key={idx}  primaryText={item}  />)
 
   let taskView = tasks.map(task => (
-     <TableRow selectable={false} style={{backgroundColor: task.totalTime > 8 ? 'gree': 'red'}}>
+     <TableRow selectable={false} style={{backgroundColor: task.totalTime > 8 ? 'green': 'red'}}>
         <TableRowColumn style={{width: '25%'}}>{formatDate(task.day) || '-'}</TableRowColumn>
-        <TableRowColumn style={{width: '15%'}}>{task.totalTime || '-'}</TableRowColumn>
+        <TableRowColumn style={{width: '15%'}}>{`${formatTotalTime(task.totalTime)}h` || '-'}</TableRowColumn>
         <TableRowColumn style={{width: '35%'}}>
           <List>
             {task.notes.map(e => itemNote(e))}

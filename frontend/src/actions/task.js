@@ -3,7 +3,6 @@ import { toastr } from "react-redux-toastr";
 import { hide } from "redux-modal";
 import Constants from '../constants/index';
 
-
 export const updateTask = task => {
   return dispatch => {
     return httpPut('tasks', task._id, { task })
@@ -18,9 +17,7 @@ export const updateTask = task => {
         }
       })
   }
-
 }
-
 
 const filterReport = payload => ({
   type: Constants.FILTER_REPORT,
@@ -62,7 +59,6 @@ export const filterReportByPeriod = filter => {
     return httpGet(`/tasks/${getUrlParam(filter)}`)
       .then(response => {
         dispatch(listReportTasks(response.success.tasks));
-        //console.log('respondeu tranquilo e suss', response.success.tasks)
       });
   }
 }
@@ -72,7 +68,6 @@ export const filterByPeriod = filter => {
     return httpGet(`/tasks/${getUrlParam(filter)}`)
       .then(response => {
         dispatch(listAllTasks(response.success.tasks));
-        //console.log('respondeu tranquilo e suss', response.success.tasks)
       });
   }
 }

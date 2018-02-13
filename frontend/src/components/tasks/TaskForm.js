@@ -33,7 +33,10 @@ let TaskForm = props => {
   const usersMap = users.map(e => ({ value: e._id, text: e.username }));
 
   return (
-    <Form className="form" onSubmit={handleSubmit}>
+    
+ 
+        <Form className="form" onSubmit={handleSubmit}>
+         
       <CustomSelectField
         floatingLabelText="To"
         options={usersMap}
@@ -59,8 +62,11 @@ let TaskForm = props => {
         rows={2}
         rowsMax={4}
       />
+    
       {actions}
     </Form>
+  
+  
   );
 };
 
@@ -71,7 +77,7 @@ TaskForm = withFormik({
         _id: props.task._id,
         owner: props.task.owner,
         timeSpent: props.task.timeSpent,
-        day: props.task.day,
+        day: new Date(props.task.day),
         note: props.task.note
       };
     } else {

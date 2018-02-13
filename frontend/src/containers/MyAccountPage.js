@@ -38,7 +38,7 @@ class MyAccountPage extends Component {
           <h1 style={styles.titleStyle}>Task Board</h1>
           <Divider />
           <div style={{margin: '45px'}}>
-          {this.props.user && <UserForm fullWidth={false} {...this.props}/>}
+          {this.props.user && <UserForm removeCancelButton={true} fullWidth={false} {...this.props}/>}
           </div>
         </Paper>
       </div>

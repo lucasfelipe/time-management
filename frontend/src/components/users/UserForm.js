@@ -11,19 +11,10 @@ let UserForm = props => {
     handleSubmit,
     handleHide,
     user,
+    removeCancelButton = false,
     fullWidth = true,
     signUp
   } = props;
-
-  const actions = [
-    <RaisedButton
-      key="cancel"
-      label="Cancel"
-      secondary={true}
-      onClick={handleHide}
-    />,
-    <RaisedButton key="submit" label={user && user._id ? 'Update' : 'Submit'} primary={true} type="submit" />
-  ];
 
   const options = [
     { value: "ADMIN", text: "Administrator" },
@@ -61,7 +52,20 @@ let UserForm = props => {
         floatingLabelText="Prefered Hours Per Day"
         name="preferedHoursPerDay"
       />
-      {actions}
+
+      {!removeCancelButton && 
+        <RaisedButton
+          key="cancel"
+          label="Cancel"
+          secondary={true}
+          onClick={handleHide}
+        />
+      }
+    <RaisedButton 
+      key="submit" 
+      label={user && user._id ? 'Update' : 'Submit'} 
+      primary={true} 
+      type="submit" />
     </form>
   );
 };
