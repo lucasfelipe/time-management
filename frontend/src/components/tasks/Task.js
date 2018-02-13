@@ -11,12 +11,10 @@ import { formatDate } from "../../utils"
 
 const Task = props => {
 
-  const { task, handleRemove, handleEdit } = props;
-
-  
+  const { task, handleRemove, handleEdit, preferedHours, filter } = props;
 
   return (
-      <TableRow selectable={false} >
+      <TableRow selectable={false} style={{backgroundColor: task.totalTime > preferedHours ? 'green': 'red'}} >
         <TableRowColumn style={{width: '15%'}}>{formatDate(task.day) || '-'}</TableRowColumn>
         <TableRowColumn style={{width: '15%'}}>{task.timeSpent || '-'}</TableRowColumn>
         <TableRowColumn style={{width: '15%'}}>{formatDate(task.createdAt) || '-'}</TableRowColumn>
@@ -29,7 +27,7 @@ const Task = props => {
             <RaisedButton 
               secondary={true} 
               label="REMOVE" 
-              onClick={() => handleRemove(task._id)} />
+              onClick={() => handleRemove(task._id, filter)} />
         </TableHeaderColumn>
       </TableRow>
   );

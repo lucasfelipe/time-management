@@ -5,22 +5,15 @@ import Constants from "../constants";
 
 
 
-
-const userRemoved = payload => ({
-  type: 'USER_REMOVED',
-  payload
-});
-
 export const handleRemove = id => {
   return dispatch => {
     return httpDelete("/users", id)
       .then(response => {
-        let { success, error } = response;
+        let { error } = response;
         if (error) {
           toastr.error("Error", error);
           return Promise.reject(response);
         } else {
-          dispatch(userRemoved(success.users));
           dispatch(fetchAllUsers())
           toastr.success("Success", "Removed");
           
@@ -29,9 +22,6 @@ export const handleRemove = id => {
       .catch(err => console.log("Error: ", err));
   }
 }
-
-
-
 
 const usersListed = payload => ({
   type: Constants.USER_LISTED,
@@ -49,12 +39,9 @@ export const fetchAllUsers = () => {
         } else {
           dispatch(usersListed(success.users));
         }
-      })
-      .catch(err => console.log("Error: ", err));
+      });
   };
 };
-
-//USER ACTIONS
 
 export const findUserById = id => {
   return dispatch => {
@@ -84,7 +71,7 @@ export const updateUser = user => {
           return Promise.reject(response);
         } else {
           dispatch(hide('addUser'))
-          toastr.success("Success", `${success.user.username} updated`);
+          toastr.success("Success", `Updated`);
           dispatch(newUserCreated(success.user));
           dispatch(fetchAllUsers())
         }
@@ -93,10 +80,10 @@ export const updateUser = user => {
   }
 }
 
-export const NEW_USER_CREATED = "NEW_USER_CREATED";
+
 
 const newUserCreated = payload => ({
-  type: NEW_USER_CREATED,
+  type: Constants.NEW_USER_CREATED,
   payload
 });
 
@@ -106,18 +93,16 @@ export const saveUser = (user, shouldFetchUsers) => {
       .then(response => {
         let { success, error } = response;
         if (error) {
-          toastr.error("Error", error);
-          return Promise.reject(response);
+          toastr.error("Error", `${error.message}`);
         } else {
           dispatch(hide('addUser'))
-          toastr.success("Success", `${user.username} saved`);
+          toastr.success("Success", `Saved`);
           dispatch(newUserCreated(success.user));
           if(shouldFetchUsers) {
             dispatch(fetchAllUsers())
           }
         }
-      })
-      .catch(err => console.log("Error: ", err));
+      });
   };
 };
 

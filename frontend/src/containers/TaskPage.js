@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ListTasks from "../components/tasks/ListTasks";
-import { fetchAll, 
+import { 
   saveTask, 
   fetchAllUsers, 
   updateTask, 
   removeTask,
   filterByPeriod,
-  exportReport,
-  addNote } from "../actions/index";
+  fetchTasksByUser,
+  exportReport
+} from "../actions/index";
 import Paper from "material-ui/Paper";
 import Divider from "material-ui/Divider";
 import { show } from "redux-modal";
@@ -18,8 +19,6 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import FilterTaskForm from "../components/tasks/FilterTaskForm";
 import { push } from "react-router-redux";
-
-
 
 const styles = {
     floatButton: {
@@ -45,7 +44,6 @@ const styles = {
 
 class TaskPage extends Component {
   componentDidMount() {
-    //this.props.fetchAll();
     this.props.fetchAllUsers();
   }
 
@@ -63,7 +61,7 @@ class TaskPage extends Component {
             <FilterTaskForm {...this.props} />
           </div>
           <Divider />
-          {tasks && <ListTasks {...this.props} />}
+          {tasks && tasks[0] && <ListTasks {...this.props} />}
         </Paper>
       </div>
     );
@@ -73,13 +71,16 @@ class TaskPage extends Component {
 const mapStateToProps = state => {
   return { 
     tasks: state.task.tasks,
-    users: state.user.users
+    users: state.user.users,
+    currentUser: state.auth.authenticatedUser,
+    preferedHours: state.task.preferedHours,
+    filter: state.task.filter
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchAll: () => {
-    dispatch(fetchAll());
+  fetchAll: (userId) => {
+    dispatch(fetchTasksByUser(userId));
   },
   fetchAllUsers: () => {
     dispatch(fetchAllUsers())
@@ -87,26 +88,23 @@ const mapDispatchToProps = dispatch => ({
   handleNotes: (task) => {
     dispatch(show("showNotes", { task }));
   },
-  handleAddNote: (task, note) => {
-    dispatch(addNote(task, note))
+  handleUpdate: (task, filter) => {
+    dispatch(updateTask(task, filter))
   },
-  handleUpdate: (task) => {
-    dispatch(updateTask(task))
+  handleRemove: (taskId, filter) => {
+    dispatch(removeTask(taskId, filter))
   },
-  handleRemove: (taskId) => {
-    dispatch(removeTask(taskId))
-  },
-  handleSave: task => {
-    dispatch(saveTask(task))
+  handleSave: (task, filter) => {
+    dispatch(saveTask(task, filter))
   },
   handleEdit: (task) => {
     dispatch(show("addTask", { task } ))
   },
   handleAddTask: (task) => {
-      dispatch(show("addTask"));
+    dispatch(show("addTask"));
   },
-  filterByPeriod: (filter) => {
-    dispatch(filterByPeriod(filter))
+  filterByPeriod: (filter, hoursPrefered) => {
+    dispatch(filterByPeriod(filter, hoursPrefered))
   },
   handleExport: (value) => {
     dispatch(exportReport(value));

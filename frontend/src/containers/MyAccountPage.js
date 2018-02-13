@@ -35,7 +35,7 @@ class MyAccountPage extends Component {
     return (
       <div style={styles.body}>
         <Paper style={styles.paper}>
-          <h1 style={styles.titleStyle}>Task Board</h1>
+          <h1 style={styles.titleStyle}>My Account</h1>
           <Divider />
           <div style={{margin: '45px'}}>
           {this.props.user && <UserForm removeCancelButton={true} fullWidth={false} {...this.props}/>}

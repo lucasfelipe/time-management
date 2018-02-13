@@ -3,7 +3,8 @@ import { toastr } from "react-redux-toastr";
 import { hide } from "redux-modal";
 import Constants from '../constants/index';
 
-export const updateTask = task => {
+
+export const updateTask = (task, filter) => {
   return dispatch => {
     return httpPut('tasks', task._id, { task })
       .then(response => {
@@ -13,7 +14,7 @@ export const updateTask = task => {
         } else {
           dispatch(hide('addTask'))
           toastr.success("Success", 'Altered');
-          dispatch(fetchAll())
+          dispatch(filterByPeriod(filter))
         }
       })
   }
@@ -31,7 +32,7 @@ export const exportReport = filter => {
 }
 
 const listAllTasks = payload => ({
-  type: LIST_ALL_TASKS,
+  type: Constants.LIST_ALL_TASKS,
   payload
 });
 
@@ -40,9 +41,9 @@ const listReportTasks = payload => ({
   payload
 });
 
-export const fetchAll = () => {
+export const fetchTasksByUser = (idUser) => {
   return dispatch => {
-    return httpGet("/tasks").then(response => {
+    return httpGet(`/tasks/${idUser}/tasks`).then(response => {
       let { success, error } = response;
       if (error) {
         toastr.error("Error", error);
@@ -54,6 +55,7 @@ export const fetchAll = () => {
   };
 };
 
+
 export const filterReportByPeriod = filter => {
   return dispatch => {
     return httpGet(`/tasks/${getUrlParam(filter)}`)
@@ -63,15 +65,34 @@ export const filterReportByPeriod = filter => {
   }
 }
 
-export const filterByPeriod = filter => {
+const updatePreferedHoursPerDay = payload => ({
+  type: Constants.PREFERED_HOURS_PER_DAY,
+  payload
+}); 
+
+const configureFilter = payload => ({
+  type: Constants.CONFIGURE_FILTER,
+  payload
+}); 
+
+export const filterByPeriod = (filter, preferedHours) => {
   return dispatch => {
+    dispatch(configureFilter(filter))
     return httpGet(`/tasks/${getUrlParam(filter)}`)
       .then(response => {
-        dispatch(listAllTasks(response.success.tasks));
+        if(response.success.tasks[0]) {
+          dispatch(listAllTasks(response.success.tasks))
+          if(preferedHours) {
+            dispatch(updatePreferedHoursPerDay(preferedHours))
+          }
+          
+        } else {
+          toastr.info("Data not found");
+        }
       });
   }
 }
-export const saveTask = task => {
+export const saveTask = (task, filter) => {
   return dispatch => {
     return httpPost("/tasks", { task })
       .then(response => {
@@ -82,28 +103,14 @@ export const saveTask = task => {
         } else {
           dispatch(hide('addTask'))
           toastr.success("Success", `${success.task.taskname} saved`);
-          dispatch(fetchAll())
+          dispatch(filterByPeriod(filter))
         }
-      })
-      .catch(err => console.log("Error: ", err));
+      });
   };
 };
 
 
-
-export const NEW_TASK_CREATED = "NEW_TASK_CREATED";
-export const LIST_ALL_TASKS = "LIST_ALL_TASKS";
-export const NOTE_ADDED = "NOTE_ADDED";
-export const ADD_NOTE = "ADD_NOTE";
-
-export const addNote = (task, note) => {
-  return {
-    type: ADD_NOTE,
-    payload: {task, note}
-  }
-}
-
-export const removeTask = id => {
+export const removeTask = (id, filter) => {
   return dispatch => {
     return httpDelete("/tasks", id)
       .then(response => {
@@ -113,9 +120,8 @@ export const removeTask = id => {
           return Promise.reject(response);
         } else {
           toastr.success("Success", `${success.message} removed.`);
-          dispatch(fetchAll())    
+          dispatch(filterByPeriod(filter))    
         }
-      })
-      .catch(err => console.log("Error: ", err));
+      });
   }
 }

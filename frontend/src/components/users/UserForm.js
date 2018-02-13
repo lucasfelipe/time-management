@@ -11,6 +11,7 @@ let UserForm = props => {
     handleSubmit,
     handleHide,
     user,
+    currentUserRole,
     removeCancelButton = false,
     fullWidth = true,
     signUp
@@ -37,7 +38,7 @@ let UserForm = props => {
         name="password"
         type="password"
       />
-      {(!signUp && props.user.role !== 'USER') && 
+      {(!signUp && currentUserRole === 'ADMIN') && 
         <CustomSelectField
           floatingLabelText="Role"
           options={options}

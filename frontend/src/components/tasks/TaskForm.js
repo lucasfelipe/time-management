@@ -9,6 +9,7 @@ import CustomSelectField from "../../commons/CustomSelectField";
 let TaskForm = props => {
   const {
     users,
+    currentUser,
     handleSubmit,
     handleHide
   } = props;
@@ -33,15 +34,15 @@ let TaskForm = props => {
   const usersMap = users.map(e => ({ value: e._id, text: e.username }));
 
   return (
-    
- 
-        <Form className="form" onSubmit={handleSubmit}>
-         
-      <CustomSelectField
-        floatingLabelText="To"
-        options={usersMap}
-        name="owner"
-      />
+    <Form className="form" onSubmit={handleSubmit}>
+      {currentUser.role === "ADMIN" && 
+        <CustomSelectField
+          floatingLabelText="To"
+          options={usersMap}
+          name="owner"
+        />
+      }
+      
       <CustomTextField
         hintText="Time Spent"
         fullWidth={true}
@@ -62,7 +63,6 @@ let TaskForm = props => {
         rows={2}
         rowsMax={4}
       />
-    
       {actions}
     </Form>
   
@@ -72,6 +72,7 @@ let TaskForm = props => {
 
 TaskForm = withFormik({
   mapPropsToValues: props => {
+    let { currentUser } = props; 
     if (props.task) {
       return {
         _id: props.task._id,
@@ -83,7 +84,7 @@ TaskForm = withFormik({
     } else {
       return {
         _id: undefined,
-        owner: "",
+        owner: currentUser._id,
         timeSpent: "",
         day: new Date(),
         note: ""
@@ -102,11 +103,10 @@ TaskForm = withFormik({
     props.handleHide();
   },
   handleSubmit: (values, { props }) => {
-    console.log(values);
     if (values._id === undefined) {
-      props.handleSave(values);
+      props.handleSave(values, props.filter);
     } else {
-      props.handleUpdate(values);
+      props.handleUpdate(values, props.filter);
     }
   },
   displayName: "TaskForm" // helps with React DevTools

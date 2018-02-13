@@ -34,8 +34,9 @@ class UserPage extends Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  user
+const mapStateToProps = ({ user, auth }) => ({
+  user,
+  currentUserRole: auth.authenticatedUser.role
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,4 +1,3 @@
-import React        from 'react';
 import fetch        from 'isomorphic-fetch';
 import moment from "moment";
 
@@ -15,16 +14,6 @@ function buildHeaders() {
   return { ...defaultHeaders, Authorization: authToken };
 }
 
-export function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    var error = new Error(response.error.message);
-    error.response = response;
-    throw error;
-  }
-}
-
 export function parseJSON(response) {
   return response.json();
 }
@@ -34,7 +23,6 @@ export function httpGet(url) {
   return fetch(URL_API + url, {
     headers: buildHeaders()
   })
-  .then(checkStatus)
   .then(parseJSON);
 }
 
@@ -46,7 +34,6 @@ export function httpPost(url, data) {
     headers: buildHeaders(),
     body: body,
   })
-  .then(checkStatus)
   .then(parseJSON);
 }
 
@@ -56,7 +43,6 @@ export function httpDelete(url, id) {
     method: 'delete',
     headers: buildHeaders(),
   })
-  .then(checkStatus)
   .then(parseJSON);
 }
 
@@ -84,7 +70,6 @@ export function httpPut(url, id, data) {
     headers: buildHeaders(),
     body
   })
-  .then(checkStatus)
   .then(parseJSON)
 }
 
@@ -92,19 +77,6 @@ export function setDocumentTitle(title) {
   document.title = `${title} | Time Managment`;
 }
 
-export function renderErrorsFor(errors, ref) {
-  if (!errors) return false;
 
-  return errors.map((error, i) => {
-    if (error[ref]) {
-      return (
-        <div key={i} className="error">
-          {error[ref]}
-        </div>
-      );
-    }
-    return null;
-  });
-}
 
 export const formatDate = (date) => moment(date).format("DD.MM.YYYY");

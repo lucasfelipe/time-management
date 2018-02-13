@@ -26,11 +26,11 @@ class ReportPage extends Component {
 }
 
   render() {
-    let {tasks} = this.props;
+    let {tasks, preferedHours} = this.props;
     return (
       <div>
         <h1 style={titleStyle}>My Report page</h1>
-        {tasks && <ListReportTasks tasks={tasks} />}
+        {tasks && <ListReportTasks preferedHours={preferedHours} tasks={tasks} />}
       </div>
     );
   }
@@ -38,6 +38,7 @@ class ReportPage extends Component {
 
 const mapStateToProps = ({ task }) => ({
   filter: task.filter,
+  preferedHours: task.preferedHours,
   tasks: task.tasksReport,
 });
 

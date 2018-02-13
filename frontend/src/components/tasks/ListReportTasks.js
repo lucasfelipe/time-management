@@ -12,7 +12,7 @@ import {
 } from 'material-ui/Table';
 
 let ListTasks = props => {
-  const { tasks } = props;
+  const { tasks, preferedHours } = props;
 
   const styles = {
     root: {
@@ -35,13 +35,13 @@ let ListTasks = props => {
 
   let itemNote = (item, idx) => (<ListItem key={idx}  primaryText={item}  />)
 
-  let taskView = tasks.map(task => (
-     <TableRow selectable={false} style={{backgroundColor: task.totalTime > 8 ? 'green': 'red'}}>
+  let taskView = tasks.map((task, i) => (
+     <TableRow key={i} selectable={false} style={{backgroundColor: task.totalTime > preferedHours ? 'green': 'red'}}>
         <TableRowColumn style={{width: '25%'}}>{formatDate(task.day) || '-'}</TableRowColumn>
         <TableRowColumn style={{width: '15%'}}>{`${formatTotalTime(task.totalTime)}h` || '-'}</TableRowColumn>
         <TableRowColumn style={{width: '35%'}}>
           <List>
-            {task.notes.map(e => itemNote(e))}
+            {task.notes.map((e, idx) => itemNote(e, idx))}
           </List>
           </TableRowColumn>
       </TableRow>
@@ -49,6 +49,10 @@ let ListTasks = props => {
 
   return (
       <div style={styles.root}>
+
+         
+        
+        
         <Table selectable={false}>
           <TableHeader displaySelectAll={false}>
             <TableRow>
