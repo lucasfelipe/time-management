@@ -39,8 +39,7 @@ export function loginUser(credentials) {
           dispatch(receiveLogin(user));
           dispatch(push("/"));
         }
-      })
-      .catch(err => console.log("Error: ", err));
+      });
   };
 }
 

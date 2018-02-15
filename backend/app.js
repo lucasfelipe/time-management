@@ -17,9 +17,14 @@ var User = require('./models/users');
 
 var appMiddlewares = require('./middlewares/appMiddlewares');
 
-mongoose.connect('mongodb://localhost/mongo-db');
-var app = express();
+var config = require('./config')
 
+mongoose.connect('mongodb://localhost/mongo-db');
+
+mongoose.connection.on('connected', function () {
+  config.configureDefaultUser();
+});
+var app = express();
 
 
 app.use(logger('dev'));
@@ -31,12 +36,10 @@ app.use(dateParser({ formats: ['YYYY-MM-DD'] }));
 
 app.use(cors());
 
-
 app.use('/', auth);
 app.use('/users', users);
 app.use('/tasks', tasks);
 
-app.use(appMiddlewares.configure);
 app.use(appMiddlewares.verifyToken);
 app.use(appMiddlewares.checkRole);
 app.use(appMiddlewares.notFound);
