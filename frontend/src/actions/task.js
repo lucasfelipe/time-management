@@ -1,38 +1,60 @@
-import { httpPost, httpGet, httpPut, httpDelete } from "../utils";
-import { push } from "react-router-redux"; 
+import { httpPost, httpGet, httpPut, httpDelete, getUrlParam } from "../utils";
 import { toastr } from "react-redux-toastr"; 
 import { hide } from "redux-modal";
+import Constants from '../constants/index';
 
 
-export const updateTask = task => {
 
-  return dispatch => {
-    //task.owner = null;
-    return httpPut('tasks', task._id, { task })
-      .then(response => {
-        let { ok, error } = response;
-        if (error) {
-          Promise.reject(error);
-        } else {
+const updatePreferedHoursPerDay = payload => ({
+  type: Constants.PREFERED_HOURS_PER_DAY,
+  payload
+}); 
 
-          dispatch(hide('addTask'))
-          toastr.success("Success", 'Altered');
-          dispatch(fetchAll())
-
-        }
-      })
-  }
-
-}
+const configureFilter = payload => ({
+  type: Constants.CONFIGURE_FILTER,
+  payload
+}); 
 
 const listAllTasks = payload => ({
-  type: LIST_ALL_TASKS,
+  type: Constants.LIST_ALL_TASKS,
   payload
 });
 
-export const fetchAll = () => {
+const listReportTasks = payload => ({
+  type: Constants.LIST_REPORT_TASKS,
+  payload
+});
+
+const filterReport = payload => ({
+  type: Constants.FILTER_REPORT,
+  payload
+})
+
+export const exportReport = filter => {
   return dispatch => {
-    return httpGet("/tasks").then(response => {
+    dispatch(filterReport(filter))
+  }
+}
+
+export const updateTask = (task, filter) => {
+  return dispatch => {
+    return httpPut('tasks', task._id, { task })
+      .then(response => {
+        let { error } = response;
+        if (error) {
+          Promise.reject(error);
+        } else {
+          dispatch(hide('addTask'))
+          toastr.success("Success", 'Altered');
+          dispatch(filterByPeriod(filter))
+        }
+      })
+  }
+}
+  
+export const fetchTasksByUser = (idUser) => {
+  return dispatch => {
+    return httpGet(`/tasks/${idUser}/tasks`).then(response => {
       let { success, error } = response;
       if (error) {
         toastr.error("Error", error);
@@ -44,61 +66,70 @@ export const fetchAll = () => {
   };
 };
 
-const newTaskCreated = payload => ({
-  type: NEW_TASK_CREATED,
-  payload
-});
 
-export const saveTask = task => {
+export const filterReportByPeriod = filter => {
+  return dispatch => {
+    return httpGet(`/tasks/${getUrlParam(filter)}`)
+      .then(response => {
+        dispatch(listReportTasks(response.success.tasks));
+      });
+  }
+}
+
+
+
+export const filterByPeriod = (filter, preferedHours) => {
+  return dispatch => {
+    dispatch(configureFilter(filter))
+    if(preferedHours) {
+      dispatch(updatePreferedHoursPerDay(preferedHours))
+    }
+
+    if(!filter.from && !filter.to) {
+      toastr.error("Data not found");
+      return;
+    }
+    return httpGet(`/tasks/${getUrlParam(filter)}`)
+      .then(response => {
+        if(response.success.tasks[0]) {
+          dispatch(listAllTasks(response.success.tasks))
+        } else {
+          dispatch(listAllTasks([]));
+          toastr.info("Data not found");
+        }
+      });
+  }
+}
+export const saveTask = (task, filter) => {
   return dispatch => {
     return httpPost("/tasks", { task })
       .then(response => {
-        let { success, error } = response;
+        let { error } = response;
         if (error) {
           toastr.error("Error", error.message);
           return Promise.reject(response);
         } else {
           dispatch(hide('addTask'))
-          toastr.success("Success", `${success.task.taskname} saved`);
-          dispatch(fetchAll())
+          toastr.success("Success", `Saved`);
+          dispatch(filterByPeriod(filter))
         }
-      })
-      .catch(err => console.log("Error: ", err));
+      });
   };
 };
 
 
-
-export const NEW_TASK_CREATED = "NEW_TASK_CREATED";
-export const LIST_ALL_TASKS = "LIST_ALL_TASKS";
-export const NOTE_ADDED = "NOTE_ADDED";
-export const ADD_NOTE = "ADD_NOTE";
-
-const noteAdded = payload => ({
-  type: NOTE_ADDED,
-  payload
-});
-
-export const addNote = (task, note) => {
-  return {
-    type: ADD_NOTE,
-    payload: {task, note}
-  }
-}
-
-export const removeTask = id => {
+export const removeTask = (id, filter) => {
   return dispatch => {
     return httpDelete("/tasks", id)
       .then(response => {
-        let { success, error } = response;
+        let { error } = response;
         if (error) {
           toastr.error("Error", error.message);
           return Promise.reject(response);
         } else {
-          toastr.success("Success", `${success.message} removed.`);
-          dispatch(fetchAll())    
+          toastr.success("Success", `Removed.`);
+          dispatch(filterByPeriod(filter))    
         }
-      })
-      .catch(err => console.log("Error: ", err));
+      });
   }
 }

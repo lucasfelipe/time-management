@@ -2,17 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { logoutUser, toggleSideBar } from "../actions/index";
 import AppBar from "material-ui/AppBar";
-import {
-  Toolbar,
-  ToolbarGroup,
-  ToolbarSeparator,
-  ToolbarTitle
-} from "material-ui/Toolbar";
-import { IconButton } from "material-ui/IconButton";
-import { FlatButton } from "material-ui/FlatButton";
+
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
-import RaisedButton from "material-ui/RaisedButton";
 
 export default props => (
   <div className="nav-bar-custom">
@@ -29,7 +21,7 @@ export default props => (
       open={props.sideBarOpened}
       onRequestChange={() => props.dispatch(toggleSideBar(props.sideBarOpened))}
     >
-    {props.visibleRoutes.find(e => e == "/tasks") && 
+    {props.visibleRoutes.find(e => e === "/tasks") && 
     <MenuItem onClick={() => props.dispatch(toggleSideBar(props.sideBarOpened))}>
         <Link  to="/" className="nav-link">
           Tasks
@@ -37,13 +29,18 @@ export default props => (
       </MenuItem>
     }
     
-      {props.visibleRoutes.find(e => e == "/users") && 
+      {props.visibleRoutes.find(e => e === "/users") && 
         <MenuItem onClick={() => props.dispatch(toggleSideBar(props.sideBarOpened))} >
           <Link to="/users" className="nav-link">
             Users
           </Link>
         </MenuItem>
       }
+       <MenuItem onClick={() => props.dispatch(toggleSideBar(props.sideBarOpened))} >
+          <Link to="/my-account" className="nav-link">
+            My Account
+          </Link>
+        </MenuItem>
       <MenuItem onClick={() => props.dispatch(logoutUser())}>
         <Link to="/users" className="nav-link">
           Logout

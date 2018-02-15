@@ -1,14 +1,16 @@
 import Constants from "../constants";
 
 const initialState = {
-  users: []
+  users: [],
+  currentUser: null
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case Constants.USER_LISTED:
-      console.log('ACTION USER', action)
       return { ...state, users: action.payload };
+    case Constants.SET_CURRENT_USER:
+      return {...state, currentUser: action.payload}
     default:
       return state;
   }
