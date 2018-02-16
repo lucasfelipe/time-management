@@ -7,6 +7,7 @@ import RaisedButton from "material-ui/RaisedButton/RaisedButton";
 import { show } from "redux-modal";
 import AddUserModal from "../modals/AddUserModal";
 import { saveUser } from "../actions/index";
+import Paper from 'material-ui/Paper';
 
 class LoginPage extends Component {
   render() {
@@ -20,20 +21,21 @@ class LoginPage extends Component {
     };
     
     return (
-      <div>
-        <LoginForm {...this.props}/>
-        <div style={styles.button}>
-        <RaisedButton
-          key="submit_button"
-          type="submit"
-          label="Create new account"
-          onClick={handleSignUp}
-          primary={true}
-          keyboardFocused={true}
-        />
-        </div>
-        <AddUserModal name="addUser" {...this.props} />
-      </div>
+        <Paper>
+          <LoginForm {...this.props}/>
+          <div style={styles.button}>
+            <RaisedButton
+              key="submit_button"
+              type="submit"
+              label="Create new account"
+              onClick={handleSignUp}
+              primary={true}
+              keyboardFocused={true}
+            />
+          </div>
+          <AddUserModal name="addUser" {...this.props} />
+        </Paper>
+      
     )
   }
 }
