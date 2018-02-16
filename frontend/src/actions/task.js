@@ -85,8 +85,7 @@ export const filterByPeriod = (filter, preferedHours) => {
       dispatch(updatePreferedHoursPerDay(preferedHours))
     }
 
-    if(!filter.from && !filter.to) {
-      toastr.error("Data not found");
+    if(!filter || !filter.from || !filter.to) {
       return;
     }
     return httpGet(`/tasks/${getUrlParam(filter)}`)
