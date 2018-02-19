@@ -19,7 +19,7 @@ var appMiddlewares = require('./middlewares/appMiddlewares');
 
 var config = require('./config')
 
-mongoose.connect('mongodb://localhost/mongo-db');
+mongoose.connect('mongodb://localhost/tm-db');
 
 mongoose.connection.on('connected', function () {
   config.configureDefaultUser();
