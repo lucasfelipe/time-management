@@ -1,20 +1,9 @@
 var User = require('../models/users')
-
+var jwt = require('jsonwebtoken');  
+var roles = require('../roles');
 
 const MY_SECRET_KEY = 'MY_SECRET_KEY';
 
-const configure = async (req, res, next) => {
-    let users = await User.find({});
-    if(users[0]) next();
-    let userDefault = new User({ 
-          username: 'admin', 
-          password: 'admin',
-          role: 'ADMIN' 
-        });
-    await userDefault.save();
-    console.info('Default User created');
-    next();
-}
 
  const verifyToken = (function(req, res, next) {
   if (req.url === '/login' || req.url === '/users') {
@@ -76,7 +65,6 @@ const devErrors = (err, req, res, next) => {
 }
 
 module.exports = {
-    configure, 
     verifyToken, 
     checkRole,
     devErrors, 

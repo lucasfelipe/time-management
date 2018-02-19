@@ -1,25 +1,20 @@
 import React from "react";
-import moment from "moment";
+
 
 import {
-  Table,
-  TableBody,
-  TableHeader,
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
 import RaisedButton from "material-ui/RaisedButton";
-import Toggle from "material-ui/Toggle";
+import { formatDate } from "../../utils"
 
 const Task = props => {
 
-  const { task, handleNotes, handleRemove, handleEdit } = props;
-
-  const formatDate = (date) => moment().format("DD.MM.YYYY");
+  const { task, handleRemove, handleEdit, preferedHours, filter } = props;
 
   return (
-      <TableRow selectable={false} style={{backgroundColor: 'pink'}}>
+      <TableRow selectable={false} style={{backgroundColor: task.totalTime > preferedHours ? 'green': 'red'}} >
         <TableRowColumn style={{width: '15%'}}>{formatDate(task.day) || '-'}</TableRowColumn>
         <TableRowColumn style={{width: '15%'}}>{task.timeSpent || '-'}</TableRowColumn>
         <TableRowColumn style={{width: '15%'}}>{formatDate(task.createdAt) || '-'}</TableRowColumn>
@@ -32,7 +27,7 @@ const Task = props => {
             <RaisedButton 
               secondary={true} 
               label="REMOVE" 
-              onClick={() => handleRemove(task._id)} />
+              onClick={() => handleRemove(task._id, filter)} />
         </TableHeaderColumn>
       </TableRow>
   );

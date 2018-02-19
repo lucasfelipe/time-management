@@ -1,21 +1,16 @@
 import React from "react";
-import { withFormik, Field, Form } from "formik";
+import { withFormik, Form } from "formik";
 import Yup from "yup";
 import FlatButton from "material-ui/FlatButton";
-import RaisedButton from "material-ui/RaisedButton";
 import CustomTextField from "../../commons/CustomTextField";
-import DatePicker from "material-ui/DatePicker";
 import CustomDatePicker from "../../commons/CustomDatePicker";
 import CustomSelectField from "../../commons/CustomSelectField";
 
 let TaskForm = props => {
   const {
-    values,
     users,
-    handleReset,
+    currentUser,
     handleSubmit,
-    handleChange,
-    handleBlur,
     handleHide
   } = props;
 
@@ -40,11 +35,14 @@ let TaskForm = props => {
 
   return (
     <Form className="form" onSubmit={handleSubmit}>
-      <CustomSelectField
-        floatingLabelText="To"
-        options={usersMap}
-        name="owner"
-      />
+      {currentUser.role === "ADMIN" && 
+        <CustomSelectField
+          floatingLabelText="To"
+          options={usersMap}
+          name="owner"
+        />
+      }
+      
       <CustomTextField
         hintText="Time Spent"
         fullWidth={true}
@@ -67,23 +65,26 @@ let TaskForm = props => {
       />
       {actions}
     </Form>
+  
+  
   );
 };
 
 TaskForm = withFormik({
   mapPropsToValues: props => {
+    let { currentUser } = props; 
     if (props.task) {
       return {
         _id: props.task._id,
         owner: props.task.owner,
         timeSpent: props.task.timeSpent,
-        day: props.task.day,
+        day: new Date(props.task.day),
         note: props.task.note
       };
     } else {
       return {
         _id: undefined,
-        owner: "",
+        owner: currentUser._id,
         timeSpent: "",
         day: new Date(),
         note: ""
@@ -102,11 +103,10 @@ TaskForm = withFormik({
     props.handleHide();
   },
   handleSubmit: (values, { props }) => {
-    console.log(values);
     if (values._id === undefined) {
-      props.handleSave(values);
+      props.handleSave(values, props.filter);
     } else {
-      props.handleUpdate(values);
+      props.handleUpdate(values, props.filter);
     }
   },
   displayName: "TaskForm" // helps with React DevTools

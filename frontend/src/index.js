@@ -3,8 +3,6 @@ import { render } from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-import PrivateRouteContainer from './containers/PrivateRouteContainer';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Root from './containers/Root'
 import  configureStore from './store/configureStore'
 import configureHistory from './store/configureHistory';

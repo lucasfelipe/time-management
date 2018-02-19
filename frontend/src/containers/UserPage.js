@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { withFormik, Field } from "formik";
-import Yup from "yup";
+
 import { saveUser, fetchAllUsers, handleRemove, updateUser } from "../actions/index";
 import { connect } from "react-redux";
-import UserForm from "../components/users/UserForm";
 import ListUsers from "../components/users/ListUsers";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
@@ -36,8 +34,9 @@ class UserPage extends Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  user
+const mapStateToProps = ({ user, auth }) => ({
+  user,
+  currentUserRole: auth.authenticatedUser.role
 });
 
 const mapDispatchToProps = dispatch => ({

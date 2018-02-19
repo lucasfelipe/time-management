@@ -1,37 +1,21 @@
-import React, { Component } from "react";
-import { withFormik, Field } from "formik";
+import React from "react";
+import { withFormik } from "formik";
 import Yup from "yup";
-import FlatButton from "material-ui/FlatButton";
-import TextField from "material-ui/TextField";
-import SelectField from "material-ui/SelectField";
-import MenuItem from "material-ui/MenuItem";
+import RaisedButton from "material-ui/RaisedButton";
+
 import CustomSelectField from "../../commons/CustomSelectField";
 import CustomTextField from "../../commons/CustomTextField";
 
 let UserForm = props => {
   const {
-    values,
-    touched,
-    errors,
-    dirty,
-    isSubmitting,
-    handleChange,
-    handleBlur,
     handleSubmit,
-    handleReset,
     handleHide,
+    user,
+    currentUserRole,
+    removeCancelButton = false,
+    fullWidth = true,
     signUp
   } = props;
-
-  const actions = [
-    <FlatButton
-      key="cancel"
-      label="Cancel"
-      secondary={true}
-      onClick={handleHide}
-    />,
-    <FlatButton key="submit" label="Submit" primary={true} type="submit" />
-  ];
 
   const options = [
     { value: "ADMIN", text: "Administrator" },
@@ -42,34 +26,47 @@ let UserForm = props => {
   return (
     <form className="form" onSubmit={handleSubmit}>
       <CustomTextField
-        fullWidth={true}
+        fullWidth={fullWidth}
         hintText="Username"
         floatingLabelText="Username"
         name="username"
       />
       <CustomTextField
         hintText="Password"
-        fullWidth={true}
+        fullWidth={fullWidth}
         floatingLabelText="Password"
         name="password"
         type="password"
       />
-      {(!signUp || props.user.role != 'USER') && 
+      {(!signUp && currentUserRole === 'ADMIN') && 
         <CustomSelectField
           floatingLabelText="Role"
           options={options}
+          fullWidth={fullWidth}
           name="role"
         />
       }
-      
       <CustomTextField
         hintText="Prefered Hours Per Day"
-        fullWidth={true}
+        fullWidth={fullWidth}
         type="number"
         floatingLabelText="Prefered Hours Per Day"
         name="preferedHoursPerDay"
       />
-      {actions}
+
+      {!removeCancelButton && 
+        <RaisedButton
+          key="cancel"
+          label="Cancel"
+          secondary={true}
+          onClick={handleHide}
+        />
+      }
+    <RaisedButton 
+      key="submit" 
+      label={user && user._id ? 'Update' : 'Submit'} 
+      primary={true} 
+      type="submit" />
     </form>
   );
 };

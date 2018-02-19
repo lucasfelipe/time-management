@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connectModal } from "redux-modal";
 import Dialog from "material-ui/Dialog";
-import FlatButton from "material-ui/FlatButton";
 import RaisedButton from "material-ui/RaisedButton";
 import UserForm from "../components/users/UserForm";
 
@@ -12,7 +11,7 @@ class AddUserModal extends Component {
   };
 
   render() {
-    const { show, handleHide, handleSaveUser } = this.props;
+    const { show, user } = this.props;
 
     const customContentStyle = {
       width: "400px",
@@ -22,7 +21,7 @@ class AddUserModal extends Component {
     return (
       <div>
         <RaisedButton label="Dialog" />
-        <Dialog contentStyle={customContentStyle} title="Add User" modal={true} open={show}>
+        <Dialog contentStyle={customContentStyle} title={user._id ? 'Edit User' : 'Add User'} modal={true} open={show}>
           <UserForm {...this.props} />
         </Dialog>
       </div>

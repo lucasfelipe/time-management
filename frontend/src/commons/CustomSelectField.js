@@ -1,6 +1,5 @@
-import React, { Component} from "react";
+import React from "react";
 import { Field } from "formik";
-import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
@@ -37,7 +36,6 @@ export default ({
   <Field
   component={MaterialSelectField}
   {...props}
-  fullWidth
 >
   {props.options.map(e => {
     return (

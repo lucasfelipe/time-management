@@ -1,4 +1,4 @@
-import { httpPost, httpGet, httpPut } from "../utils";
+import { httpPost, httpGet } from "../utils";
 import { push } from "react-router-redux";
 import Constants from '../constants'
 
@@ -39,8 +39,7 @@ export function loginUser(credentials) {
           dispatch(receiveLogin(user));
           dispatch(push("/"));
         }
-      })
-      .catch(err => console.log("Error: ", err));
+      });
   };
 }
 
@@ -49,13 +48,13 @@ export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
-function requestLogin(credentials) {
-  return {
-    type: LOGIN_REQUEST,
-    isAuthenticated: false,
-    credentials
-  };
-}
+// function requestLogin(credentials) {
+//   return {
+//     type: LOGIN_REQUEST,
+//     isAuthenticated: false,
+//     credentials
+//   };
+// }
 
 function receiveLogin(user) {
   return {
